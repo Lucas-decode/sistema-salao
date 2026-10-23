@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Gerenciar serviços | Sistema Salão</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <header>
+        <h1>Sistema Salão</h1>
+
+        <nav>
+            <a href="{{ url_for('auth.painel_proprietario') }}">Voltar</a>
+            <a href="{{ url_for('auth.logout') }}">Sair</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Gerenciar serviços</h2>
+        <p>Cadastre, consulte e edite os serviços oferecidos pelo salão.</p>
+
+        {% with mensagens = get_flashed_messages(with_categories=true) %}
+            {% for categoria, mensagem in mensagens %}
+                <div class="mensagem mensagem-{{ categoria }}">
+                    <span>{{ mensagem }}</span>
+
+                    <button
+                        type="button"
+                        class="fechar-mensagem"
+                        aria-label="Fechar mensagem"
+                    >&times;</button>
+                </div>
+            {% endfor %}
+        {% endwith %}
+
+        <section>
+            <h3>Cadastrar novo serviço</h3>
+
+            <form method="POST">
+                <label for="nome">Nome do serviço</label>
+                <input
+                    type="text"
+                    id="nome"
+                    name="nome"
+                    maxlength="100"
+                    required
+                >
+
+                <label for="comprimento">Comprimento do cabelo</label>
+                <select id="comprimento" name="comprimento" required>
+                    <option value="">Selecione o comprimento</option>
+                    <option value="Curto">Curto</option>
+                    <option value="Médio">Médio</option>
+                    <option value="Comprido">Comprido</option>
+                </select>
+
+                <label for="descricao">Descrição</label>
+                <textarea
+                    id="descricao"
+                    name="descricao"
+                    rows="3"
+                ></textarea>
+
+                <label for="preco">Preço (R$)</label>
+                <input
+                    type="number"
+                    id="preco"
+                    name="preco"
+                    min="0.01"
+                    step="0.01"
+                    required
+                >
+
+                <label for="duracao">Duração (minutos)</label>
+                <input
+                    type="number"
+                    id="duracao"
+                    name="duracao"
+                    min="1"
+                    step="1"
+                    required
+                >
+
+                <button type="submit">Cadastrar serviço</button>
+            </form>
+        </section>
+
+        <section>
+            <h3>Serviços cadastrados</h3>
+
+            {% if servicos %}
+                {% for servico in servicos %}
+                    <div class="card-servico">
+                        <h4>
+                            {{ servico.nome }} — {{ servico.comprimento }}
+                        </h4>
+
+                        <p>
+                            {{ servico.descricao or 'Sem descrição' }}
+                        </p>
+
+                        <p>
+                            Preço:
+                            R$ {{ "%.2f"|format(servico.preco) }}
+                        </p>
+
+                        <p>
+                            Duração:
+                            {{ servico.duracao_minutos }} minutos
+                        </p>
+
+                        <p>
+                            Status:
+                            {{ 'Ativo' if servico.ativo else 'Inativo' }}
+                        </p>
+
+                        <a href="{{ url_for('auth.editar_servico', servico_id=servico.id) }}">
+                            Editar serviço
+                        </a>
+                    </div>
+
+                    <hr>
+                {% endfor %}
+            {% else %}
+                <p>Nenhum serviço cadastrado.</p>
+            {% endif %}
+        </section>
+    </main>
+
+    <script>
+        document.querySelectorAll(".mensagem").forEach(function (mensagem) {
+            const botaoFechar = mensagem.querySelector(".fechar-mensagem");
+            let removida = false;
+
+            function removerMensagem() {
+                if (removida) return;
+
+                removida = true;
+                mensagem.classList.add("saindo");
+
+                setTimeout(function () {
+                    mensagem.remove();
+                }, 400);
+            }
+
+            if (botaoFechar) {
+                botaoFechar.addEventListener("click", removerMensagem);
+            }
+
+            setTimeout(removerMensagem, 4500);
+        });
+    </script>
+</body>
+</html>

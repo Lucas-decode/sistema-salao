@@ -1,0 +1,29 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Salão</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Sistema Salão</h1>
+        <nav>
+            <a href="{{ url_for('auth.login') }}">Entrar</a>
+            <a href="{{ url_for('auth.cadastro') }}">Criar conta</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Seu momento de cuidado começa aqui.</h2>
+        <p>
+            Agende seu horário de forma simples e rápida.
+        </p>
+
+        <a href="{{ url_for('auth.login') }}">Fazer agendamento</a>
+        <a href="{{ url_for('auth.cadastro') }}">Criar minha conta</a>
+    </main>
+</body>
+</html>

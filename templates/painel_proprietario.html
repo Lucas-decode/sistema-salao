@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Administrativo | Sistema Salão</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Sistema Salão</h1>
+        <nav>
+            <a href="{{ url_for('auth.logout') }}">Sair</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Painel Administrativo</h2>
+        <p>Olá, {{ session['nome'] }}! Bem-vinda ao painel do salão.</p>
+
+        <section>
+            <h3>Agendamentos</h3>
+            <p>Consulte e gerencie os horários reservados pelos clientes.</p>
+            <a href="#">Ver agendamentos</a>
+        </section>
+
+        <section>
+            <h3>Serviços</h3>
+            <p>Cadastre, edite e atualize os serviços e seus preços.</p>
+            <a href="{{ url_for('auth.gerenciar_servicos') }}">
+    Gerenciar serviços
+</a>
+        </section>
+
+        <section>
+            <h3>Horários de funcionamento</h3>
+            <p>Configure os dias e horários de atendimento.</p>
+            <a href="#">Configurar horários</a>
+        </section>
+    </main>
+</body>
+</html>

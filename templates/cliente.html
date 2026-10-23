@@ -1,0 +1,37 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Área do Cliente | Sistema Salão</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Sistema Salão</h1>
+        <nav>
+            <a href="{{ url_for('auth.logout') }}">Sair</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Olá, {{ session['nome'] }}!</h2>
+        <p>Bem-vindo(a) à sua área do cliente.</p>
+
+        <section>
+            <h3>Agende seu horário</h3>
+            <p>Escolha o serviço e encontre um horário disponível.</p>
+            <a href="{{ url_for('auth.novo_agendamento') }}">Novo agendamento</a>
+        </section>
+
+        <section>
+    <h3>Meus agendamentos</h3>
+    <p>Consulte seus horários e acompanhe suas reservas.</p>
+    <a href="{{ url_for('auth.meus_agendamentos') }}">
+        Ver meus agendamentos
+    </a>
+</section>
+    </main>
+</body>
+</html>

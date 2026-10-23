@@ -1,0 +1,198 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Novo agendamento | Sistema Salão</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Sistema Salão</h1>
+        <nav>
+            <a href="{{ url_for('auth.area_cliente') }}">Voltar</a>
+            <a href="{{ url_for('auth.logout') }}">Sair</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Novo agendamento</h2>
+        <p>Escolha o serviço, a data e um dos horários disponíveis.</p>
+
+        {% with mensagens = get_flashed_messages(with_categories=true) %}
+            {% for categoria, mensagem in mensagens %}
+                <div class="mensagem mensagem-{{ categoria }}">
+                    <span>{{ mensagem }}</span>
+                    <button type="button" class="fechar-mensagem" aria-label="Fechar mensagem">&times;</button>
+                </div>
+            {% endfor %}
+        {% endwith %}
+
+        <section>
+            <form method="POST" id="form-agendamento">
+                <label for="servico_id">Serviço</label>
+                <select id="servico_id" name="servico_id" required>
+                    <option value="">Selecione um serviço</option>
+                    {% for servico in servicos %}
+                        <option value="{{ servico.id }}">
+                            {{ servico.nome }} — {{ servico.comprimento }}
+                            | R$ {{ "%.2f"|format(servico.preco) }}
+                            | {{ servico.duracao_minutos }} minutos
+                        </option>
+                    {% endfor %}
+                </select>
+
+                <label for="data">Data desejada</label>
+                <input type="date" id="data" name="data" required>
+
+                <label for="horario">Horário disponível</label>
+                <select id="horario" name="horario" required disabled>
+                    <option value="">Selecione primeiro o serviço e a data</option>
+                </select>
+
+                <p id="mensagem-horarios" role="status" aria-live="polite">
+                    Os horários disponíveis aparecerão após selecionar o serviço e a data.
+                </p>
+
+                <label for="observacao">Observações (opcional)</label>
+                <textarea id="observacao" name="observacao" rows="4"
+                    placeholder="Alguma informação importante?"></textarea>
+
+                <button type="submit" id="botao-agendar" disabled>
+                    Solicitar agendamento
+                </button>
+            </form>
+        </section>
+    </main>
+
+    <script>
+        const campoServico = document.getElementById("servico_id");
+        const campoData = document.getElementById("data");
+        const campoHorario = document.getElementById("horario");
+        const mensagemHorarios = document.getElementById("mensagem-horarios");
+        const botaoAgendar = document.getElementById("botao-agendar");
+        const formulario = document.getElementById("form-agendamento");
+
+        // Impede selecionar datas anteriores a hoje.
+        const agora = new Date();
+        const ano = agora.getFullYear();
+        const mes = String(agora.getMonth() + 1).padStart(2, "0");
+        const dia = String(agora.getDate()).padStart(2, "0");
+        campoData.min = `${ano}-${mes}-${dia}`;
+
+        let requisicaoAtual = 0;
+
+        function definirEstadoInicial(texto) {
+            campoHorario.innerHTML = "";
+            const opcao = document.createElement("option");
+            opcao.value = "";
+            opcao.textContent = texto;
+            campoHorario.appendChild(opcao);
+            campoHorario.disabled = true;
+            botaoAgendar.disabled = true;
+        }
+
+        async function carregarHorarios() {
+            const servicoId = campoServico.value;
+            const data = campoData.value;
+            const idRequisicao = ++requisicaoAtual;
+
+            if (!servicoId || !data) {
+                definirEstadoInicial("Selecione primeiro o serviço e a data");
+                mensagemHorarios.textContent =
+                    "Selecione o serviço e a data para consultar os horários.";
+                return;
+            }
+
+            definirEstadoInicial("Carregando horários...");
+            mensagemHorarios.textContent = "Consultando horários disponíveis...";
+
+            try {
+                const parametros = new URLSearchParams({
+                    servico_id: servicoId,
+                    data: data
+                });
+
+                const resposta = await fetch(
+                    `{{ url_for('auth.horarios_disponiveis') }}?${parametros.toString()}`,
+                    { headers: { "Accept": "application/json" } }
+                );
+
+                if (!resposta.ok) {
+                    throw new Error("Falha ao consultar horários.");
+                }
+
+                const resultado = await resposta.json();
+
+                if (idRequisicao !== requisicaoAtual) return;
+
+                definirEstadoInicial(
+                    resultado.horarios && resultado.horarios.length
+                        ? "Selecione um horário"
+                        : "Nenhum horário disponível"
+                );
+
+                if (resultado.horarios && resultado.horarios.length) {
+                    resultado.horarios.forEach(function (horario) {
+                        const opcao = document.createElement("option");
+                        opcao.value = horario;
+                        opcao.textContent = horario;
+                        campoHorario.appendChild(opcao);
+                    });
+
+                    campoHorario.disabled = false;
+                    mensagemHorarios.textContent =
+                        `${resultado.horarios.length} horário(s) disponível(is).`;
+                } else {
+                    mensagemHorarios.textContent =
+                        "Não há horários disponíveis para esse serviço nessa data. Escolha outra data.";
+                }
+            } catch (erro) {
+                if (idRequisicao !== requisicaoAtual) return;
+
+                definirEstadoInicial("Erro ao carregar horários");
+                mensagemHorarios.textContent =
+                    "Não foi possível carregar os horários. Verifique a conexão e tente novamente.";
+            }
+        }
+
+        campoServico.addEventListener("change", carregarHorarios);
+        campoData.addEventListener("change", carregarHorarios);
+
+        campoHorario.addEventListener("change", function () {
+            botaoAgendar.disabled = !campoHorario.value;
+        });
+
+        formulario.addEventListener("submit", function (evento) {
+            if (!campoServico.value || !campoData.value || !campoHorario.value) {
+                evento.preventDefault();
+                mensagemHorarios.textContent =
+                    "Selecione o serviço, a data e um horário disponível.";
+            }
+        });
+
+        // Fechamento automático e manual das mensagens.
+        document.querySelectorAll(".mensagem").forEach(function (mensagem) {
+            const botaoFechar = mensagem.querySelector(".fechar-mensagem");
+            let removida = false;
+
+            function removerMensagem() {
+                if (removida) return;
+                removida = true;
+                mensagem.classList.add("saindo");
+
+                setTimeout(function () {
+                    mensagem.remove();
+                }, 400);
+            }
+
+            if (botaoFechar) {
+                botaoFechar.addEventListener("click", removerMensagem);
+            }
+
+            setTimeout(removerMensagem, 4500);
+        });
+    </script>
+</body>
+</html>
