@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -10,7 +9,7 @@
 <body>
     <header>
         <h1>Sistema Salão</h1>
-        <nav>
+        <nav aria-label="Navegação principal">
             <a href="{{ url_for('auth.area_cliente') }}">Voltar</a>
             <a href="{{ url_for('auth.logout') }}">Sair</a>
         </nav>
@@ -22,14 +21,24 @@
 
         {% with mensagens = get_flashed_messages(with_categories=true) %}
             {% for categoria, mensagem in mensagens %}
-                <div class="mensagem mensagem-{{ categoria }}">
+                <div
+                    class="mensagem mensagem-{{ categoria }}"
+                    role="{{ 'alert' if categoria == 'danger' else 'status' }}"
+                    aria-live="{{ 'assertive' if categoria == 'danger' else 'polite' }}"
+                >
                     <span>{{ mensagem }}</span>
-                    <button type="button" class="fechar-mensagem" aria-label="Fechar mensagem">&times;</button>
+                    <button
+                        type="button"
+                        class="fechar-mensagem"
+                        aria-label="Fechar mensagem"
+                    >&times;</button>
                 </div>
             {% endfor %}
         {% endwith %}
 
-        <section>
+        <section aria-labelledby="titulo-formulario">
+            <h3 id="titulo-formulario" class="sr-only">Dados do agendamento</h3>
+
             <form method="POST" id="form-agendamento">
                 <label for="servico_id">Serviço</label>
                 <select id="servico_id" name="servico_id" required>
@@ -44,20 +53,45 @@
                 </select>
 
                 <label for="data">Data desejada</label>
-                <input type="date" id="data" name="data" required>
+                <input
+                    type="date"
+                    id="data"
+                    name="data"
+                    required
+                    aria-describedby="ajuda-data"
+                >
+                <small id="ajuda-data">
+                    Escolha hoje ou uma data futura.
+                </small>
 
                 <label for="horario">Horário disponível</label>
-                <select id="horario" name="horario" required disabled>
+                <select
+                    id="horario"
+                    name="horario"
+                    required
+                    disabled
+                    aria-describedby="mensagem-horarios"
+                >
                     <option value="">Selecione primeiro o serviço e a data</option>
                 </select>
 
-                <p id="mensagem-horarios" role="status" aria-live="polite">
+                <p
+                    id="mensagem-horarios"
+                    role="status"
+                    aria-live="polite"
+                    aria-atomic="true"
+                >
                     Os horários disponíveis aparecerão após selecionar o serviço e a data.
                 </p>
 
                 <label for="observacao">Observações (opcional)</label>
-                <textarea id="observacao" name="observacao" rows="4"
-                    placeholder="Alguma informação importante?"></textarea>
+                <textarea
+                    id="observacao"
+                    name="observacao"
+                    rows="4"
+                    maxlength="1000"
+                    placeholder="Alguma informação importante?"
+                ></textarea>
 
                 <button type="submit" id="botao-agendar" disabled>
                     Solicitar agendamento
@@ -74,49 +108,74 @@
         const botaoAgendar = document.getElementById("botao-agendar");
         const formulario = document.getElementById("form-agendamento");
 
-        // Impede selecionar datas anteriores a hoje.
+        // Impede a seleção de datas anteriores a hoje.
         const agora = new Date();
         const ano = agora.getFullYear();
         const mes = String(agora.getMonth() + 1).padStart(2, "0");
         const dia = String(agora.getDate()).padStart(2, "0");
+
         campoData.min = `${ano}-${mes}-${dia}`;
 
         let requisicaoAtual = 0;
 
         function definirEstadoInicial(texto) {
-            campoHorario.innerHTML = "";
+            campoHorario.replaceChildren();
+
             const opcao = document.createElement("option");
             opcao.value = "";
             opcao.textContent = texto;
+
             campoHorario.appendChild(opcao);
             campoHorario.disabled = true;
+            campoHorario.value = "";
+
             botaoAgendar.disabled = true;
+        }
+
+        function atualizarBotao() {
+            botaoAgendar.disabled = !(
+                campoServico.value &&
+                campoData.value &&
+                campoHorario.value &&
+                !campoHorario.disabled
+            );
         }
 
         async function carregarHorarios() {
             const servicoId = campoServico.value;
-            const data = campoData.value;
+            const dataSelecionada = campoData.value;
             const idRequisicao = ++requisicaoAtual;
 
-            if (!servicoId || !data) {
-                definirEstadoInicial("Selecione primeiro o serviço e a data");
+            definirEstadoInicial("Consultando horários...");
+            campoHorario.removeAttribute("aria-invalid");
+
+            if (!servicoId || !dataSelecionada) {
+                definirEstadoInicial(
+                    "Selecione primeiro o serviço e a data"
+                );
+
                 mensagemHorarios.textContent =
                     "Selecione o serviço e a data para consultar os horários.";
+
                 return;
             }
 
-            definirEstadoInicial("Carregando horários...");
-            mensagemHorarios.textContent = "Consultando horários disponíveis...";
+            mensagemHorarios.textContent =
+                "Consultando horários disponíveis. Aguarde.";
 
             try {
                 const parametros = new URLSearchParams({
                     servico_id: servicoId,
-                    data: data
+                    data: dataSelecionada
                 });
 
                 const resposta = await fetch(
                     `{{ url_for('auth.horarios_disponiveis') }}?${parametros.toString()}`,
-                    { headers: { "Accept": "application/json" } }
+                    {
+                        headers: {
+                            "Accept": "application/json"
+                        }
+                    }
                 );
 
                 if (!resposta.ok) {
@@ -125,73 +184,94 @@
 
                 const resultado = await resposta.json();
 
-                if (idRequisicao !== requisicaoAtual) return;
-
-                definirEstadoInicial(
-                    resultado.horarios && resultado.horarios.length
-                        ? "Selecione um horário"
-                        : "Nenhum horário disponível"
-                );
-
-                if (resultado.horarios && resultado.horarios.length) {
-                    resultado.horarios.forEach(function (horario) {
-                        const opcao = document.createElement("option");
-                        opcao.value = horario;
-                        opcao.textContent = horario;
-                        campoHorario.appendChild(opcao);
-                    });
-
-                    campoHorario.disabled = false;
-                    mensagemHorarios.textContent =
-                        `${resultado.horarios.length} horário(s) disponível(is).`;
-                } else {
-                    mensagemHorarios.textContent =
-                        "Não há horários disponíveis para esse serviço nessa data. Escolha outra data.";
+                // Ignora respostas antigas se a seleção mudou durante a consulta.
+                if (idRequisicao !== requisicaoAtual) {
+                    return;
                 }
-            } catch (erro) {
-                if (idRequisicao !== requisicaoAtual) return;
 
-                definirEstadoInicial("Erro ao carregar horários");
+                if (!Array.isArray(resultado.horarios)) {
+                    throw new Error("Resposta inválida da API.");
+                }
+
+                if (resultado.horarios.length === 0) {
+                    definirEstadoInicial("Nenhum horário disponível");
+
+                    mensagemHorarios.textContent =
+                        "Não há horários disponíveis para esse serviço nessa data. Escolha outra data ou serviço.";
+
+                    return;
+                }
+
+                definirEstadoInicial("Selecione um horário");
+
+                resultado.horarios.forEach(function (horario) {
+                    const opcao = document.createElement("option");
+                    opcao.value = horario;
+                    opcao.textContent = horario;
+                    campoHorario.appendChild(opcao);
+                });
+
+                campoHorario.disabled = false;
+
                 mensagemHorarios.textContent =
-                    "Não foi possível carregar os horários. Verifique a conexão e tente novamente.";
-            }
+                    `${resultado.horarios.length} horário(s) disponível(is). Selecione um horário.`;
+
+                atualizarBotao();
+
+
+} catch (erro) {
+    if (idRequisicao !== requisicaoAtual) {
+        return;
+    }
+
+    definirEstadoInicial("Não foi possível carregar os horários");
+
+    campoHorario.setAttribute("aria-invalid", "true");
+
+    mensagemHorarios.textContent =
+        "Não foi possível consultar os horários. Verifique sua conexão e tente novamente selecionando outra data ou serviço.";
+
+    console.error("Erro ao carregar horários:", erro);
+}
         }
 
         campoServico.addEventListener("change", carregarHorarios);
         campoData.addEventListener("change", carregarHorarios);
 
-        campoHorario.addEventListener("change", function () {
-            botaoAgendar.disabled = !campoHorario.value;
-        });
+        campoHorario.addEventListener("change", atualizarBotao);
 
         formulario.addEventListener("submit", function (evento) {
-            if (!campoServico.value || !campoData.value || !campoHorario.value) {
+            if (
+                !campoServico.value ||
+                !campoData.value ||
+                !campoHorario.value ||
+                campoHorario.disabled
+            ) {
                 evento.preventDefault();
+
                 mensagemHorarios.textContent =
-                    "Selecione o serviço, a data e um horário disponível.";
+                    "Selecione um serviço, uma data e um horário disponível antes de solicitar o agendamento.";
+
+                if (!campoServico.value) {
+                    campoServico.focus();
+                } else if (!campoData.value) {
+                    campoData.focus();
+                } else {
+                    campoHorario.focus();
+                }
             }
         });
 
-        // Fechamento automático e manual das mensagens.
+        // Permite fechar as mensagens manualmente.
+        // Mensagens não desaparecem automaticamente, dando mais tempo para leitura.
         document.querySelectorAll(".mensagem").forEach(function (mensagem) {
             const botaoFechar = mensagem.querySelector(".fechar-mensagem");
-            let removida = false;
-
-            function removerMensagem() {
-                if (removida) return;
-                removida = true;
-                mensagem.classList.add("saindo");
-
-                setTimeout(function () {
-                    mensagem.remove();
-                }, 400);
-            }
 
             if (botaoFechar) {
-                botaoFechar.addEventListener("click", removerMensagem);
+                botaoFechar.addEventListener("click", function () {
+                    mensagem.remove();
+                });
             }
-
-            setTimeout(removerMensagem, 4500);
         });
     </script>
 </body>

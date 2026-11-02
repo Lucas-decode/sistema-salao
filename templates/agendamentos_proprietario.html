@@ -1,0 +1,208 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Agendamentos | Sistema Salão</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <header>
+        <h1>Sistema Salão</h1>
+
+        <nav>
+            <a href="{{ url_for('auth.painel_proprietario') }}">
+                Voltar ao painel
+            </a>
+
+            <a href="{{ url_for('auth.logout') }}">
+                Sair
+            </a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Agendamentos dos clientes</h2>
+
+        <p>
+            Consulte os horários reservados e acompanhe a situação de cada atendimento.
+        </p>
+
+        {# Exibe mensagens de retorno das operações #}
+        {% with mensagens = get_flashed_messages(with_categories=true) %}
+            {% if mensagens %}
+                <div class="mensagens">
+                    {% for categoria, mensagem in mensagens %}
+                        <div class="alerta alerta-{{ categoria }}" role="alert">
+                            {{ mensagem }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% if agendamentos %}
+
+            <div class="tabela-responsiva">
+                <table class="tabela-agendamentos">
+
+                    <thead>
+                        <tr>
+                            <th>Cliente</th>
+                            <th>Serviço</th>
+                            <th>Comprimento</th>
+                            <th>Preço</th>
+                            <th>Duração</th>
+                            <th>Data</th>
+                            <th>Horário</th>
+                            <th>Status</th>
+                            <th>Observação</th>
+                            <th>Gerenciar</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for agendamento in agendamentos %}
+
+                            <tr>
+                                <td>
+                                    {{ agendamento.nome_cliente }}
+                                </td>
+
+                                <td>
+                                    {{ agendamento.nome_servico }}
+                                </td>
+
+                                <td>
+                                    {{ agendamento.comprimento or "—" }}
+                                </td>
+
+                                <td>
+                                    R$ {{ "%.2f"|format(agendamento.preco|float) }}
+                                </td>
+
+                                <td>
+                                    {{ agendamento.duracao_minutos }} min
+                                </td>
+
+                                <td>
+                                    {{ agendamento.data.strftime('%d/%m/%Y') }}
+                                </td>
+
+                                <td>
+                                    {{ agendamento.horario }}
+                                </td>
+
+                                <td>
+                                    <span class="status status-{{ agendamento.status }}">
+                                        {% if agendamento.status == 'pendente' %}
+                                            Pendente
+                                        {% elif agendamento.status == 'confirmado' %}
+                                            Confirmado
+                                        {% elif agendamento.status == 'cancelado' %}
+                                            Cancelado
+                                        {% elif agendamento.status == 'concluido' %}
+                                            Concluído
+                                        {% elif agendamento.status == 'faltou' %}
+                                            Faltou
+                                        {% else %}
+                                            {{ agendamento.status|capitalize }}
+                                        {% endif %}
+                                    </span>
+                                </td>
+
+                                <td>
+                                    {{ agendamento.observacao or "—" }}
+                                </td>
+
+                                <td>
+                                    <form
+                                        method="POST"
+                                        action="{{ url_for('auth.gerenciar_agendamentos') }}"
+                                        class="form-status"
+                                    >
+                                        <input
+                                            type="hidden"
+                                            name="agendamento_id"
+                                            value="{{ agendamento.id }}"
+                                        >
+
+                                        <label for="status-{{ agendamento.id }}">
+                                            Novo status
+                                        </label>
+
+                                        <select
+                                            name="status"
+                                            id="status-{{ agendamento.id }}"
+                                            required
+                                        >
+                                            <option
+                                                value="pendente"
+                                                {% if agendamento.status == 'pendente' %}selected{% endif %}
+                                            >
+                                                Pendente
+                                            </option>
+
+                                            <option
+                                                value="confirmado"
+                                                {% if agendamento.status == 'confirmado' %}selected{% endif %}
+                                            >
+                                                Confirmado
+                                            </option>
+
+                                            <option
+                                                value="cancelado"
+                                                {% if agendamento.status == 'cancelado' %}selected{% endif %}
+                                            >
+                                                Cancelado
+                                            </option>
+
+                                            <option
+                                                value="concluido"
+                                                {% if agendamento.status == 'concluido' %}selected{% endif %}
+                                            >
+                                                Concluído
+                                            </option>
+
+                                            <option
+                                                value="faltou"
+                                                {% if agendamento.status == 'faltou' %}selected{% endif %}
+                                            >
+                                                Faltou
+                                            </option>
+                                        </select>
+
+                                        <button type="submit">
+                                            Atualizar
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+            </div>
+
+        {% else %}
+
+            <p>Nenhum agendamento cadastrado até o momento.</p>
+
+        {% endif %}
+
+        <p>
+            <a href="{{ url_for('auth.painel_proprietario') }}">
+                Voltar ao painel administrativo
+            </a>
+        </p>
+
+    </main>
+
+</body>
+</html>

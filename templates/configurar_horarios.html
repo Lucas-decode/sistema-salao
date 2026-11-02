@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurar horários | Sistema Salão</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Sistema Salão</h1>
+        <nav>
+            <a href="{{ url_for('auth.painel_proprietario') }}">Voltar ao painel</a>
+            <a href="{{ url_for('auth.logout') }}">Sair</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Horários de funcionamento</h2>
+
+        <p>Configure os horários de abertura e fechamento do salão.</p>
+
+        {% with mensagens = get_flashed_messages(with_categories=true) %}
+            {% if mensagens %}
+                {% for categoria, mensagem in mensagens %}
+                    <div class="mensagem-{{ categoria }}">
+                        {{ mensagem }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% if periodos %}
+            {% for periodo in periodos %}
+                <section>
+                    <h3>{{ periodo.nome_dia }}</h3>
+
+                    <form method="POST" action="{{ url_for('auth.configurar_horarios') }}">
+                        <input type="hidden" name="periodo_id" value="{{ periodo.id }}">
+
+                        <p>
+                            <label for="abertura_{{ periodo.id }}">Horário de abertura:</label>
+                            <input
+                                type="time"
+                                id="abertura_{{ periodo.id }}"
+                                name="hora_abertura"
+                                value="{{ periodo.hora_abertura }}"
+                                required
+                            >
+                        </p>
+
+                        <p>
+                            <label for="fechamento_{{ periodo.id }}">Horário de fechamento:</label>
+                            <input
+                                type="time"
+                                id="fechamento_{{ periodo.id }}"
+                                name="hora_fechamento"
+                                value="{{ periodo.hora_fechamento }}"
+                                required
+                            >
+                        </p>
+
+                        <p>
+                            <input
+                                type="checkbox"
+                                id="ativo_{{ periodo.id }}"
+                                name="ativo"
+                                {% if periodo.ativo %}checked{% endif %}
+                            >
+                            <label for="ativo_{{ periodo.id }}">Período ativo</label>
+                        </p>
+
+                        <button type="submit">Salvar alterações</button>
+                    </form>
+                </section>
+            {% endfor %}
+        {% else %}
+            <p>Nenhum período de funcionamento cadastrado.</p>
+        {% endif %}
+    </main>
+</body>
+</html>

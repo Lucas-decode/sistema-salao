@@ -113,75 +113,137 @@ def area_cliente():
 
     return render_template("cliente.html")
 
-def _obter_horarios_disponiveis(cursor, servico_id, data_agendamento):
-    """Gera inícios de 15 em 15 minutos dentro do expediente."""
-    if data_agendamento.weekday() not in (1, 2, 3, 4, 5):
-        return []  # Segunda (0) e domingo (6) não há atendimento.
 
+def _obter_horarios_disponiveis(cursor, servico_id, data_agendamento):
+    """Gera horários disponíveis conforme o expediente e os agendamentos."""
+
+    # Verifica se o serviço existe e está ativo.
     cursor.execute(
-        "SELECT duracao_minutos FROM servicos WHERE id = %s AND ativo = TRUE",
+        """
+        SELECT duracao_minutos
+        FROM servicos
+        WHERE id = %s AND ativo = TRUE
+        """,
         (servico_id,)
     )
     servico = cursor.fetchone()
+
     if not servico:
         return []
 
     duracao = int(servico["duracao_minutos"])
+
+    # Busca os períodos de funcionamento ativos para o dia escolhido.
     cursor.execute(
         """
-        SELECT TIME_FORMAT(a.horario, '%H:%i') AS horario,
-               s.duracao_minutos, a.status
-        FROM agendamentos a
-        INNER JOIN servicos s ON s.id = a.servico_id
+        SELECT hora_abertura, hora_fechamento
+        FROM periodos_funcionamento
+        WHERE dia_semana = %s AND ativo = TRUE
+        ORDER BY hora_abertura
+        """,
+        (data_agendamento.weekday(),)
+    )
+    periodos = cursor.fetchall()
+
+    if not periodos:
+        return []
+
+    # Busca os agendamentos do dia e a duração de cada serviço.
+    cursor.execute(
+        """
+        SELECT
+            TIME_FORMAT(a.horario, '%H:%i') AS horario,
+            s.duracao_minutos,
+            a.status
+        FROM agendamentos AS a
+        INNER JOIN servicos AS s ON s.id = a.servico_id
         WHERE a.`data` = %s
         """,
         (data_agendamento,)
     )
+
     ocupados = []
+
     for agendamento in cursor.fetchall():
-        inicio_ocupado = datetime.strptime(agendamento["horario"], "%H:%M")
+        # Agendamentos cancelados não bloqueiam horários.
+        if agendamento["status"] == "cancelado":
+            continue
+
+        inicio_ocupado = datetime.strptime(
+            agendamento["horario"], "%H:%M"
+        )
+
         fim_ocupado = inicio_ocupado + timedelta(
             minutes=int(agendamento["duracao_minutos"])
         )
-        ocupados.append((inicio_ocupado, fim_ocupado, agendamento["status"]))
+
+        ocupados.append((inicio_ocupado, fim_ocupado))
 
     horarios = []
-    periodos = ((7 * 60, 11 * 60), (13 * 60, 18 * 60))
     agora = datetime.now()
 
-    for inicio_periodo, fim_periodo in periodos:
+    def converter_para_minutos(horario):
+        """Converte o horário retornado pelo MySQL em minutos."""
+
+        if isinstance(horario, timedelta):
+            return int(horario.total_seconds() // 60)
+
+        if hasattr(horario, "hour") and hasattr(horario, "minute"):
+            return horario.hour * 60 + horario.minute
+
+        partes = str(horario).split(":")
+        return int(partes[0]) * 60 + int(partes[1])
+
+    # Gera os horários possíveis em intervalos de 15 minutos.
+    for periodo in periodos:
+        inicio_periodo = converter_para_minutos(
+            periodo["hora_abertura"]
+        )
+        fim_periodo = converter_para_minutos(
+            periodo["hora_fechamento"]
+        )
+
         minuto = inicio_periodo
+
         while minuto < fim_periodo:
             hora, minutos = divmod(minuto, 60)
-            inicio = datetime.strptime(f"{hora:02d}:{minutos:02d}", "%H:%M")
+
+            inicio = datetime.strptime(
+                f"{hora:02d}:{minutos:02d}",
+                "%H:%M"
+            )
+
             fim = inicio + timedelta(minutes=duracao)
 
-            # O atendimento precisa terminar dentro do mesmo período.
-            if fim.hour * 60 + fim.minute > fim_periodo:
+            # O serviço precisa terminar dentro do período ativo.
+            fim_em_minutos = fim.hour * 60 + fim.minute
+
+            if fim_em_minutos > fim_periodo:
                 minuto += 15
                 continue
 
-            # Não oferecer horários que já passaram no dia atual.
-            if data_agendamento == date.today() and inicio.time() <= agora.time():
+            # Não permite horários que já passaram hoje.
+            if (
+                data_agendamento == date.today()
+                and inicio.time() <= agora.time()
+            ):
                 minuto += 15
                 continue
 
+            # Verifica conflitos com agendamentos não cancelados.
             conflita = any(
-                (
-                    inicio == inicio_ocupado
-                    if status == "cancelado"
-                    # O índice UNIQUE(data, horario) existente no MySQL
-                    # ainda impede repetir exatamente o início cancelado.
-                    else inicio < fim_ocupado and fim > inicio_ocupado
-                )
-                for inicio_ocupado, fim_ocupado, status in ocupados
+                inicio < fim_ocupado
+                and fim > inicio_ocupado
+                for inicio_ocupado, fim_ocupado in ocupados
             )
+
             if not conflita:
                 horarios.append(inicio.strftime("%H:%M"))
 
             minuto += 15
 
-    return horarios
+    return sorted(set(horarios))
+
 
 
 @auth.route("/agendamento/horarios")
@@ -438,7 +500,6 @@ def gerenciar_servicos():
             """
         )
         servicos = cursor.fetchall()
-
         return render_template("servicos.html", servicos=servicos)
 
     finally:
@@ -552,6 +613,305 @@ def editar_servico(servico_id):
                 )
 
         return render_template("editar_servico.html", servico=servico)
+
+    finally:
+        cursor.close()
+        conexao.close()
+
+@auth.route("/agendamentos", methods=["GET", "POST"])
+def gerenciar_agendamentos():
+    if "usuario_id" not in session:
+        return redirect(url_for("auth.login"))
+
+    if session.get("tipo") != "proprietario":
+        return redirect(url_for("auth.area_cliente"))
+
+    conexao = conectar_banco()
+    cursor = conexao.cursor(dictionary=True)
+
+    try:
+        if request.method == "POST":
+            agendamento_id = request.form.get(
+                "agendamento_id", ""
+            ).strip()
+
+            novo_status = request.form.get("status", "").strip()
+
+            valor_texto = request.form.get(
+                "valor_final", ""
+            ).strip()
+
+            observacao_atendimento = request.form.get(
+                "observacao_atendimento", ""
+            ).strip()
+
+            status_validos = {
+                "pendente",
+                "confirmado",
+                "cancelado",
+                "concluido",
+                "faltou",
+            }
+
+            if (
+                not agendamento_id.isdigit()
+                or novo_status not in status_validos
+            ):
+                flash(
+                    "Dados inválidos para atualizar o agendamento.",
+                    "danger",
+                )
+                return redirect(
+                    url_for("auth.gerenciar_agendamentos")
+                )
+
+            agendamento_id = int(agendamento_id)
+
+            # Confirma que o agendamento existe.
+            cursor.execute(
+                """
+                SELECT id, status
+                FROM agendamentos
+                WHERE id = %s
+                """,
+                (agendamento_id,),
+            )
+
+            agendamento = cursor.fetchone()
+
+            if not agendamento:
+                flash("Agendamento não encontrado.", "danger")
+                return redirect(
+                    url_for("auth.gerenciar_agendamentos")
+                )
+
+            # O valor final é obrigatório para um atendimento concluído.
+            valor_final = None
+
+            if novo_status == "concluido":
+                try:
+                    valor_final = float(
+                        valor_texto.replace(",", ".")
+                    )
+                except ValueError:
+                    flash(
+                        "Informe um valor final válido para o atendimento.",
+                        "danger",
+                    )
+                    return redirect(
+                        url_for("auth.gerenciar_agendamentos")
+                    )
+
+                if (
+                    not valor_final >= 0
+                    or valor_final == float("inf")
+                    or valor_final != valor_final
+                ):
+                    flash(
+                        "O valor final deve ser igual ou maior que zero.",
+                        "danger",
+                    )
+                    return redirect(
+                        url_for("auth.gerenciar_agendamentos")
+                    )
+
+            try:
+                # Atualiza o status do agendamento.
+                cursor.execute(
+                    """
+                    UPDATE agendamentos
+                    SET status = %s
+                    WHERE id = %s
+                    """,
+                    (novo_status, agendamento_id),
+                )
+
+                # Concluído significa que a cliente compareceu.
+                # Faltou significa que a cliente não compareceu.
+                if novo_status in ("concluido", "faltou"):
+                    status_atendimento = (
+                        "compareceu"
+                        if novo_status == "concluido"
+                        else "faltou"
+                    )
+
+                    cursor.execute(
+                        """
+                        INSERT INTO atendimentos
+                            (
+                                agendamento_id,
+                                status,
+                                valor_final,
+                                observacao
+                            )
+                        VALUES (%s, %s, %s, %s)
+                        ON DUPLICATE KEY UPDATE
+                            status = VALUES(status),
+                            valor_final = VALUES(valor_final),
+                            observacao = VALUES(observacao)
+                        """,
+                        (
+                            agendamento_id,
+                            status_atendimento,
+                            valor_final,
+                            observacao_atendimento or None,
+                        ),
+                    )
+
+                conexao.commit()
+
+                flash(
+                    "Agendamento atualizado com sucesso!",
+                    "success",
+                )
+
+            except mysql.connector.Error:
+                conexao.rollback()
+
+                flash(
+                    "Não foi possível atualizar o agendamento e "
+                    "registrar o atendimento. Verifique os dados "
+                    "e tente novamente.",
+                    "danger",
+                )
+
+            return redirect(
+                url_for("auth.gerenciar_agendamentos")
+            )
+
+        cursor.execute(
+            """
+            SELECT
+                a.id,
+                u.nome AS nome_cliente,
+                s.nome AS nome_servico,
+                s.comprimento,
+                s.preco,
+                s.duracao_minutos,
+                a.data,
+                TIME_FORMAT(a.horario, '%H:%i') AS horario,
+                a.observacao,
+                a.status,
+                a.criado_em,
+                at.valor_final,
+                at.observacao AS observacao_atendimento,
+                at.status AS status_atendimento
+            FROM agendamentos AS a
+            INNER JOIN usuarios AS u
+                ON a.cliente_id = u.id
+            INNER JOIN servicos AS s
+                ON a.servico_id = s.id
+            LEFT JOIN atendimentos AS at
+                ON at.agendamento_id = a.id
+            ORDER BY a.data DESC, a.horario DESC
+            """
+        )
+
+        agendamentos = cursor.fetchall()
+
+        return render_template(
+            "agendamentos_proprietario.html",
+            agendamentos=agendamentos,
+        )
+
+    finally:
+        cursor.close()
+        conexao.close()    
+@auth.route("/configurar-horarios", methods=["GET", "POST"])
+def configurar_horarios():
+    if "usuario_id" not in session:
+        return redirect(url_for("auth.login"))
+
+    if session.get("tipo") != "proprietario":
+        return redirect(url_for("auth.area_cliente"))
+
+    conexao = conectar_banco()
+    cursor = conexao.cursor(dictionary=True)
+
+    try:
+        dias_semana = {
+            0: "Segunda-feira",
+            1: "Terça-feira",
+            2: "Quarta-feira",
+            3: "Quinta-feira",
+            4: "Sexta-feira",
+            5: "Sábado",
+            6: "Domingo",
+        }
+
+        if request.method == "POST":
+            periodo_id = request.form.get("periodo_id", "").strip()
+            hora_abertura = request.form.get("hora_abertura", "").strip()
+            hora_fechamento = request.form.get("hora_fechamento", "").strip()
+            ativo = request.form.get("ativo") == "on"
+
+            if not periodo_id.isdigit():
+                flash("Período inválido.", "danger")
+                return redirect(url_for("auth.configurar_horarios"))
+
+            try:
+                abertura = datetime.strptime(
+                    hora_abertura, "%H:%M"
+                ).time()
+                fechamento = datetime.strptime(
+                    hora_fechamento, "%H:%M"
+                ).time()
+            except ValueError:
+                flash("Informe horários válidos.", "danger")
+                return redirect(url_for("auth.configurar_horarios"))
+
+            if abertura >= fechamento:
+                flash(
+                    "O fechamento deve ser posterior à abertura.",
+                    "danger",
+                )
+                return redirect(url_for("auth.configurar_horarios"))
+
+            cursor.execute(
+                """
+                UPDATE periodos_funcionamento
+                SET hora_abertura = %s,
+                    hora_fechamento = %s,
+                    ativo = %s
+                WHERE id = %s
+                """,
+                (
+                    abertura,
+                    fechamento,
+                    ativo,
+                    int(periodo_id),
+                ),
+            )
+            conexao.commit()
+
+            flash("Horário atualizado com sucesso!", "success")
+            return redirect(url_for("auth.configurar_horarios"))
+
+        cursor.execute(
+            """
+            SELECT
+                id,
+                dia_semana,
+                TIME_FORMAT(hora_abertura, '%H:%i') AS hora_abertura,
+                TIME_FORMAT(hora_fechamento, '%H:%i') AS hora_fechamento,
+                ativo
+            FROM periodos_funcionamento
+            ORDER BY dia_semana, hora_abertura
+            """
+        )
+
+        periodos = cursor.fetchall()
+
+        for periodo in periodos:
+            periodo["nome_dia"] = dias_semana.get(
+                periodo["dia_semana"],
+                "Dia desconhecido",
+            )
+
+        return render_template(
+            "configurar_horarios.html",
+            periodos=periodos,
+        )
 
     finally:
         cursor.close()

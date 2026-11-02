@@ -269,3 +269,109 @@ main section button:hover {
         transform: translateY(-10px);
     }
 }
+
+/* Tabela de agendamentos do proprietário */
+.tabela-responsiva {
+    width: 100%;
+    overflow-x: auto;
+    margin: 25px 0;
+}
+
+.tabela-agendamentos {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.tabela-agendamentos th,
+.tabela-agendamentos td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #eeeeee;
+    white-space: nowrap;
+}
+
+.tabela-agendamentos th {
+    background-color: #713b82;
+    color: #ffffff;
+}
+
+.tabela-agendamentos tbody tr:hover {
+    background-color: #f8f3fa;
+}
+
+.status {
+    display: inline-block;
+    padding: 5px 9px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.status-pendente {
+    background-color: #fff0c2;
+    color: #805900;
+}
+
+.status-confirmado {
+    background-color: #d9f5df;
+    color: #176b2c;
+}
+
+.status-cancelado,
+.status-faltou {
+    background-color: #fde2e2;
+    color: #a11b1b;
+}
+
+.status-concluido {
+    background-color: #dceaff;
+    color: #174b91;
+}
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Acessibilidade: foco visível por teclado */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid #572d65;
+    outline-offset: 3px;
+}
+
+/* Mantém os controles desabilitados visualmente identificáveis */
+button:disabled,
+select:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+/* Permite que tabelas sejam utilizadas em telas menores */
+.tabela-responsiva {
+    max-width: 100%;
+}
+
+/* Respeita a preferência do usuário por menos movimento */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+}
