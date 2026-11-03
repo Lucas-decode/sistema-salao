@@ -16,20 +16,57 @@ def cadastro():
     if request.method == "POST":
         nome = request.form.get("nome", "").strip()
         email = request.form.get("email", "").strip().lower()
+        telefone_digitado = request.form.get("telefone", "").strip()
+        data_nascimento = request.form.get("data_nascimento", "").strip()
         senha = request.form.get("senha", "")
 
-        if not nome or not email or not senha:
-            flash("Preencha todos os campos.", "danger")
+        # Verifica os campos obrigatórios
+        if not nome or not email or not telefone_digitado or not senha:
+            flash("Preencha todos os campos obrigatórios.", "danger")
             return redirect(url_for("auth.cadastro"))
 
+        # Valida a senha
         if len(senha) < 8:
             flash("A senha deve ter pelo menos 8 caracteres.", "danger")
             return redirect(url_for("auth.cadastro"))
+
+        # Mantém somente os números do telefone
+        telefone = "".join(
+            caractere for caractere in telefone_digitado
+            if caractere.isdigit()
+        )
+
+        # Valida telefone celular brasileiro: DDD + 9 dígitos
+        if len(telefone) != 11 or telefone[2] != "9":
+            flash(
+                "Informe um celular válido com DDD, por exemplo: (18) 99999-9999.",
+                "danger"
+            )
+            return redirect(url_for("auth.cadastro"))
+
+        # Armazena somente os 11 dígitos do telefone.
+# A formatação será aplicada apenas na interface.
+
+        # Valida a data de nascimento, se preenchida
+        if data_nascimento:
+            try:
+                nascimento = date.fromisoformat(data_nascimento)
+
+                if nascimento > date.today():
+                    flash("A data de nascimento não pode ser futura.", "danger")
+                    return redirect(url_for("auth.cadastro"))
+
+            except ValueError:
+                flash("Informe uma data de nascimento válida.", "danger")
+                return redirect(url_for("auth.cadastro"))
+        else:
+            data_nascimento = None
 
         conexao = conectar_banco()
         cursor = conexao.cursor(dictionary=True)
 
         try:
+            # Verifica e-mail duplicado
             cursor.execute(
                 "SELECT id FROM usuarios WHERE email = %s",
                 (email,)
@@ -39,15 +76,32 @@ def cadastro():
                 flash("Este e-mail já está cadastrado.", "danger")
                 return redirect(url_for("auth.cadastro"))
 
+
+            # Verifica se o telefone já está cadastrado.
+            cursor.execute(
+                """
+                SELECT id
+                FROM usuarios
+                WHERE telefone = %s
+                """,
+                (telefone,)
+            )
+
+            if cursor.fetchone():
+                flash("Este telefone já está cadastrado.", "danger")
+                return redirect(url_for("auth.cadastro"))
+
             senha_hash = generate_password_hash(senha)
 
             cursor.execute(
                 """
-                INSERT INTO usuarios (nome, email, senha, tipo)
-                VALUES (%s, %s, %s, 'cliente')
+                INSERT INTO usuarios
+                    (nome, email, senha, telefone, data_nascimento, tipo)
+                VALUES (%s, %s, %s, %s, %s, 'cliente')
                 """,
-                (nome, email, senha_hash)
+                (nome, email, senha_hash, telefone, data_nascimento)
             )
+
             conexao.commit()
 
             flash("Cadastro realizado! Faça seu login.", "success")
@@ -782,9 +836,10 @@ def gerenciar_agendamentos():
         cursor.execute(
             """
             SELECT
-                a.id,
-                u.nome AS nome_cliente,
-                s.nome AS nome_servico,
+    a.id,
+    u.nome AS nome_cliente,
+    u.telefone AS telefone_cliente,
+    s.nome AS nome_servico,
                 s.comprimento,
                 s.preco,
                 s.duracao_minutos,

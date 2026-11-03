@@ -54,6 +54,7 @@
                     <thead>
                         <tr>
                             <th>Cliente</th>
+                            <th>telefone</th>
                             <th>Serviço</th>
                             <th>Comprimento</th>
                             <th>Preço</th>
@@ -71,12 +72,23 @@
 
                             <tr>
                                 <td>
-                                    {{ agendamento.nome_cliente }}
-                                </td>
+    {{ agendamento.nome_cliente }}
+</td>
 
-                                <td>
-                                    {{ agendamento.nome_servico }}
-                                </td>
+<td>
+    {% set telefone = agendamento.telefone_cliente or "" %}
+    {% if telefone|length == 11 %}
+        ({{ telefone[:2] }}) {{ telefone[2:7] }}-{{ telefone[7:] }}
+    {% elif telefone %}
+        {{ telefone }}
+    {% else %}
+        Não informado
+    {% endif %}
+</td>
+
+<td>
+    {{ agendamento.nome_servico }}
+</td>
 
                                 <td>
                                     {{ agendamento.comprimento or "—" }}

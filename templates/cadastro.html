@@ -1,42 +1,140 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Criar conta | Sistema Salão</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <title>Criar conta | Bela Essência</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
     <main>
-        <h1>Criar conta</h1>
+        <h1>Bela Essência</h1>
+        <h2>Criar conta</h2>
+
         <p>Cadastre-se para agendar seu horário.</p>
 
         {% with mensagens = get_flashed_messages(with_categories=true) %}
             {% for categoria, mensagem in mensagens %}
-                <p>{{ mensagem }}</p>
+                <p role="alert">{{ mensagem }}</p>
             {% endfor %}
         {% endwith %}
 
         <form method="POST">
-            <label for="nome">Nome completo</label>
-            <input type="text" id="nome" name="nome"
-                   required maxlength="100">
+            <div>
+                <label for="nome">Nome completo *</label>
+                <input
+                    type="text"
+                    id="nome"
+                    name="nome"
+                    autocomplete="name"
+                    required
+                    maxlength="100"
+                    value="{{ request.form.get('nome', '') }}"
+                >
+            </div>
 
-            <label for="email">E-mail</label>
-            <input type="email" id="email" name="email"
-                   required maxlength="150">
+            <div>
+                <label for="email">E-mail *</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    autocomplete="email"
+                    required
+                    maxlength="150"
+                    value="{{ request.form.get('email', '') }}"
+                >
+            </div>
 
-            <label for="senha">Senha</label>
-            <input type="password" id="senha" name="senha"
-                   required minlength="8">
+            <div>
+                <label for="telefone">Celular/WhatsApp *</label>
+                <input
+                    type="tel"
+                    id="telefone"
+                    name="telefone"
+                    autocomplete="tel-national"
+                    inputmode="numeric"
+                    placeholder="(18) 99999-9999"
+                    aria-describedby="ajuda-telefone"
+                    required
+                    maxlength="15"
+                    pattern="\([0-9]{2}\) 9[0-9]{4}-[0-9]{4}"
+                    title="Informe um celular com DDD, por exemplo: (18) 99999-9999"
+                    value="{{ request.form.get('telefone', '') }}"
+                >
+                <small id="ajuda-telefone">
+                    Informe o DDD e os 9 dígitos do celular.
+                </small>
+            </div>
+
+            <div>
+                <label for="data_nascimento">
+                    Data de nascimento (opcional)
+                </label>
+                <input
+                    type="date"
+                    id="data_nascimento"
+                    name="data_nascimento"
+                    autocomplete="bday"
+                    value="{{ request.form.get('data_nascimento', '') }}"
+                >
+            </div>
+
+            <div>
+                <label for="senha">Senha *</label>
+                <input
+                    type="password"
+                    id="senha"
+                    name="senha"
+                    autocomplete="new-password"
+                    required
+                    minlength="8"
+                    aria-describedby="ajuda-senha"
+                >
+                <small id="ajuda-senha">
+                    A senha deve ter pelo menos 8 caracteres.
+                </small>
+            </div>
 
             <button type="submit">Criar conta</button>
         </form>
 
-        <p>Já tem uma conta?
+        <p>
+            Já tem uma conta?
             <a href="{{ url_for('auth.login') }}">Entrar</a>
         </p>
     </main>
+
+    <script>
+        const campoTelefone = document.getElementById("telefone");
+
+        campoTelefone.addEventListener("input", function () {
+            let numeros = this.value.replace(/\D/g, "");
+
+            // Limita o telefone a 11 dígitos.
+            numeros = numeros.slice(0, 11);
+
+            if (numeros.length === 0) {
+                this.value = "";
+                return;
+            }
+
+            if (numeros.length <= 2) {
+                this.value = "(" + numeros;
+            } else if (numeros.length <= 7) {
+                this.value =
+                    "(" + numeros.slice(0, 2) + ") " +
+                    numeros.slice(2);
+            } else {
+                this.value =
+                    "(" + numeros.slice(0, 2) + ") " +
+                    numeros.slice(2, 7) + "-" +
+                    numeros.slice(7);
+            }
+        });
+    </script>
 </body>
 </html>
