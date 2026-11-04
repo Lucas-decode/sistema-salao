@@ -13,5 +13,8 @@ def conectar_banco():
         user=os.getenv("DB_USER"),
         password=os.getenv("DB_PASSWORD"),
         database=os.getenv("DB_NAME"),
+        ssl_ca=os.getenv("DB_SSL_CA"),
+        ssl_verify_cert=True,
+        ssl_verify_identity=True,
         use_pure=True
     )
