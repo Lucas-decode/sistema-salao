@@ -1,3 +1,4 @@
+
 CREATE DATABASE IF NOT EXISTS sistema_salao
 CHARACTER SET utf8mb4
 COLLATE utf8mb4_unicode_ci;
@@ -14,7 +15,11 @@ CREATE TABLE usuarios (
     email VARCHAR(150) NOT NULL UNIQUE,
     senha VARCHAR(255) NOT NULL,
     tipo ENUM('cliente', 'proprietario') NOT NULL DEFAULT 'cliente',
-    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    telefone VARCHAR(11) NOT NULL,
+    data_nascimento DATE DEFAULT NULL,
+
+    UNIQUE KEY telefone_unico (telefone)
 );
 
 -- =========================================
@@ -28,16 +33,19 @@ CREATE TABLE servicos (
     preco DECIMAL(10,2) NOT NULL,
     duracao_minutos INT NOT NULL,
     ativo BOOLEAN NOT NULL DEFAULT TRUE,
-    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    comprimento ENUM('Curto', 'Médio', 'Comprido') NOT NULL,
+
+    UNIQUE KEY uq_servico_comprimento (nome, comprimento)
 );
 
 -- =========================================
--- CONFIGURAÇÃO DOS HORÁRIOS
+-- CONFIGURAÇÃO DOS PERÍODOS DE FUNCIONAMENTO
 -- =========================================
 
-CREATE TABLE horarios_funcionamento (
+CREATE TABLE periodos_funcionamento (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    dia_semana TINYINT NOT NULL UNIQUE,
+    dia_semana TINYINT NOT NULL,
     hora_abertura TIME NOT NULL,
     hora_fechamento TIME NOT NULL,
     intervalo_minutos INT NOT NULL DEFAULT 30,
@@ -64,13 +72,16 @@ CREATE TABLE agendamentos (
     ) NOT NULL DEFAULT 'pendente',
     criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
-    FOREIGN KEY (cliente_id)
+    INDEX (cliente_id),
+    INDEX (servico_id),
+
+    CONSTRAINT agendamentos_ibfk_1
+        FOREIGN KEY (cliente_id)
         REFERENCES usuarios(id),
 
-    FOREIGN KEY (servico_id)
-        REFERENCES servicos(id),
-
-    UNIQUE KEY horario_agendamento (data, horario)
+    CONSTRAINT agendamentos_ibfk_2
+        FOREIGN KEY (servico_id)
+        REFERENCES servicos(id)
 );
 
 -- =========================================
@@ -85,6 +96,7 @@ CREATE TABLE atendimentos (
     observacao TEXT,
     registrado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
-    FOREIGN KEY (agendamento_id)
+    CONSTRAINT atendimentos_ibfk_1
+        FOREIGN KEY (agendamento_id)
         REFERENCES agendamentos(id)
 );
