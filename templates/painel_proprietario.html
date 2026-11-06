@@ -1,46 +1,133 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel Administrativo | Sistema Salão</title>
+
+    <title>Painel Administrativo | Bela Essência</title>
+
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body>
-    <header>
-        <h1>Sistema Salão</h1>
-        <nav>
-            <a href="{{ url_for('auth.logout') }}">Sair</a>
+
+<body class="pagina-painel-admin">
+
+    <header class="cabecalho-login">
+
+        <a href="{{ url_for('inicio') }}" class="marca-login">
+            Bela <span>Essência</span>
+        </a>
+
+        <nav aria-label="Navegação principal">
+            <a href="{{ url_for('auth.logout') }}" class="botao-sair">
+                Sair da conta
+            </a>
         </nav>
+
     </header>
 
-    <main>
-        <h2>Painel Administrativo</h2>
-        <p>Olá, {{ session['nome'] }}! Bem-vinda ao painel do salão.</p>
+    <main class="conteudo-painel-admin">
 
-        <section>
-            <h3>Agendamentos</h3>
-            <p>Consulte e gerencie os horários reservados pelos clientes.</p>
-            <a href="{{ url_for('auth.gerenciar_agendamentos') }}">
-                Ver agendamentos
-            </a>
+        <section class="introducao-painel-admin">
+
+            <span class="subtitulo-login">GESTÃO DO SALÃO</span>
+
+            <h1>Painel Administrativo</h1>
+
+            <p>
+                Olá, {{ session['nome'] }}!
+                Seja bem-vinda à área de gerenciamento do salão.
+            </p>
+
         </section>
 
-        <section>
-            <h3>Serviços</h3>
-            <p>Cadastre, edite e atualize os serviços e seus preços.</p>
-            <a href="{{ url_for('auth.gerenciar_servicos') }}">
-                Gerenciar serviços
-            </a>
+        <section class="secao-gestao-admin">
+
+            <div class="titulo-gestao-admin">
+                <h2>Gerencie seu salão</h2>
+                <p>
+                    Escolha uma das opções abaixo para administrar
+                    seu negócio.
+                </p>
+            </div>
+
+            <div class="cartoes-gestao-admin">
+
+                <article class="cartao-gestao-admin">
+
+                    <span class="numero-gestao-admin">01</span>
+
+                    <div class="icone-gestao-admin">▦</div>
+
+                    <h3>Agendamentos</h3>
+
+                    <p>
+                        Consulte as reservas dos clientes e
+                        gerencie os atendimentos.
+                    </p>
+
+                    <a
+                        href="{{ url_for('auth.gerenciar_agendamentos') }}"
+                        class="botao-gestao-admin"
+                    >
+                        Ver agendamentos
+                    </a>
+
+                </article>
+
+                <article class="cartao-gestao-admin">
+
+                    <span class="numero-gestao-admin">02</span>
+
+                    <div class="icone-gestao-admin">✂</div>
+
+                    <h3>Serviços</h3>
+
+                    <p>
+                        Cadastre novos serviços, edite informações
+                        e atualize os preços.
+                    </p>
+
+                    <a
+                        href="{{ url_for('auth.gerenciar_servicos') }}"
+                        class="botao-gestao-admin"
+                    >
+                        Gerenciar serviços
+                    </a>
+
+                </article>
+
+                <article class="cartao-gestao-admin">
+
+                    <span class="numero-gestao-admin">03</span>
+
+                    <div class="icone-gestao-admin">◷</div>
+
+                    <h3>Horários de funcionamento</h3>
+
+                    <p>
+                        Configure os dias de atendimento e os
+                        períodos disponíveis para agendamento.
+                    </p>
+
+                    <a
+                        href="{{ url_for('auth.configurar_horarios') }}"
+                        class="botao-gestao-admin"
+                    >
+                        Configurar horários
+                    </a>
+
+                </article>
+
+            </div>
+
         </section>
 
-<section>
-    <h3>Horários de funcionamento</h3>
-    <p>Configure os dias e horários de atendimento.</p>
-    <a href="{{ url_for('auth.configurar_horarios') }}">
-        Configurar horários
-    </a>
-</section>
     </main>
+
+    <footer class="rodape-cliente">
+        <p>&copy; 2026 Bela Essência. Todos os direitos reservados.</p>
+    </footer>
+
 </body>
 </html>

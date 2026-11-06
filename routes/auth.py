@@ -13,6 +13,8 @@ auth = Blueprint("auth", __name__)
 
 @auth.route("/cadastro", methods=["GET", "POST"])
 def cadastro():
+    hoje = date.today()
+
     if request.method == "POST":
         nome = request.form.get("nome", "").strip()
         email = request.form.get("email", "").strip().lower()
@@ -20,23 +22,27 @@ def cadastro():
         data_nascimento = request.form.get("data_nascimento", "").strip()
         senha = request.form.get("senha", "")
 
-        # Verifica os campos obrigatórios
+        # Verifica os campos obrigatórios.
         if not nome or not email or not telefone_digitado or not senha:
             flash("Preencha todos os campos obrigatórios.", "danger")
             return redirect(url_for("auth.cadastro"))
 
-        # Valida a senha
+        # Valida o tamanho da senha.
         if len(senha) < 8:
             flash("A senha deve ter pelo menos 8 caracteres.", "danger")
             return redirect(url_for("auth.cadastro"))
 
-        # Mantém somente os números do telefone
+        if len(senha) > 72:
+            flash("A senha deve ter no máximo 72 caracteres.", "danger")
+            return redirect(url_for("auth.cadastro"))
+
+        # Mantém somente os números do telefone.
         telefone = "".join(
             caractere for caractere in telefone_digitado
             if caractere.isdigit()
         )
 
-        # Valida telefone celular brasileiro: DDD + 9 dígitos
+        # Valida telefone celular brasileiro.
         if len(telefone) != 11 or telefone[2] != "9":
             flash(
                 "Informe um celular válido com DDD, por exemplo: (18) 99999-9999.",
@@ -44,16 +50,23 @@ def cadastro():
             )
             return redirect(url_for("auth.cadastro"))
 
-        # Armazena somente os 11 dígitos do telefone.
-# A formatação será aplicada apenas na interface.
-
-        # Valida a data de nascimento, se preenchida
+        # Valida a data de nascimento, se preenchida.
         if data_nascimento:
             try:
                 nascimento = date.fromisoformat(data_nascimento)
 
-                if nascimento > date.today():
-                    flash("A data de nascimento não pode ser futura.", "danger")
+                if nascimento < date(1900, 1, 1):
+                    flash(
+                        "Informe uma data de nascimento a partir de 01/01/1900.",
+                        "danger"
+                    )
+                    return redirect(url_for("auth.cadastro"))
+
+                if nascimento > hoje:
+                    flash(
+                        "A data de nascimento não pode ser futura.",
+                        "danger"
+                    )
                     return redirect(url_for("auth.cadastro"))
 
             except ValueError:
@@ -66,7 +79,7 @@ def cadastro():
         cursor = conexao.cursor(dictionary=True)
 
         try:
-            # Verifica e-mail duplicado
+            # Verifica e-mail duplicado.
             cursor.execute(
                 "SELECT id FROM usuarios WHERE email = %s",
                 (email,)
@@ -76,14 +89,9 @@ def cadastro():
                 flash("Este e-mail já está cadastrado.", "danger")
                 return redirect(url_for("auth.cadastro"))
 
-
-            # Verifica se o telefone já está cadastrado.
+            # Verifica telefone duplicado.
             cursor.execute(
-                """
-                SELECT id
-                FROM usuarios
-                WHERE telefone = %s
-                """,
+                "SELECT id FROM usuarios WHERE telefone = %s",
                 (telefone,)
             )
 
@@ -111,7 +119,10 @@ def cadastro():
             cursor.close()
             conexao.close()
 
-    return render_template("cadastro.html")
+    return render_template(
+        "cadastro.html",
+        hoje=hoje.isoformat()
+    )
 
 
 @auth.route("/login", methods=["GET", "POST"])
@@ -153,7 +164,7 @@ def login():
 @auth.route("/logout")
 def logout():
     session.clear()
-    flash("Você saiu da sua conta.", "success")
+    flash("Você saiu da sua conta com sucesso!", "success")
     return redirect(url_for("auth.login"))
 
 
@@ -479,6 +490,48 @@ def gerenciar_servicos():
 
     try:
         if request.method == "POST":
+
+            # Ativar ou desativar um serviço.
+            acao = request.form.get("acao", "").strip()
+
+            if acao == "alternar_status":
+                servico_id = request.form.get("servico_id", "").strip()
+
+                if not servico_id.isdigit():
+                    flash("Serviço inválido.", "danger")
+                    return redirect(url_for("auth.gerenciar_servicos"))
+
+                cursor.execute(
+                    "SELECT id, ativo FROM servicos WHERE id = %s",
+                    (int(servico_id),)
+                )
+
+                servico = cursor.fetchone()
+
+                if not servico:
+                    flash("Serviço não encontrado.", "danger")
+                    return redirect(url_for("auth.gerenciar_servicos"))
+
+                novo_status = not bool(servico["ativo"])
+
+                cursor.execute(
+                    """
+                    UPDATE servicos
+                    SET ativo = %s
+                    WHERE id = %s
+                    """,
+                    (novo_status, int(servico_id))
+                )
+
+                conexao.commit()
+
+                if novo_status:
+                    flash("Serviço ativado com sucesso!", "success")
+                else:
+                    flash("Serviço desativado com sucesso!", "success")
+
+                return redirect(url_for("auth.gerenciar_servicos"))
+
             nome = request.form.get("nome", "").strip()
             descricao = request.form.get("descricao", "").strip()
             comprimento = request.form.get("comprimento", "").strip()

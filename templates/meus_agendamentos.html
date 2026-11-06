@@ -4,47 +4,253 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meus agendamentos | Sistema Salão</title>
+
+    <title>Meus agendamentos | Bela Essência</title>
+
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body>
-    <header>
-        <h1>Sistema Salão</h1>
-        <nav>
-            <a href="{{ url_for('auth.area_cliente') }}">Voltar</a>
-            <a href="{{ url_for('auth.logout') }}">Sair</a>
-        </nav>
-    </header>
 
-    <main>
-        <h2>Meus agendamentos</h2>
-        <p>Acompanhe seus horários e serviços.</p>
+<body class="pagina-meus-agendamentos">
+
+    <header class="cabecalho-login">
+
+    <a href="{{ url_for('inicio') }}" class="marca-login">
+        Bela <span>Essência</span>
+    </a>
+
+    <nav class="nav-agendamentos" aria-label="Navegação principal">
+        <a href="{{ url_for('auth.area_cliente') }}" class="botao-voltar-agendamentos">
+            Voltar
+        </a>
+
+        <a href="{{ url_for('auth.logout') }}" class="botao-sair">
+            Sair da conta
+        </a>
+    </nav>
+
+</header>
+
+    <main class="conteudo-meus-agendamentos">
+
+        <section class="introducao-agendamentos">
+
+            <span class="subtitulo-login">SEU MOMENTO, SEU CUIDADO</span>
+
+            <h1>Meus agendamentos</h1>
+
+            <p>
+                Acompanhe suas reservas e consulte os detalhes
+                dos seus próximos atendimentos.
+            </p>
+
+        </section>
 
         {% if agendamentos %}
-            {% for agendamento in agendamentos %}
-                <section>
-                    <h3>{{ agendamento.servico }}</h3>
-                    <p>
-                        Data:
-                        {{ agendamento.data.strftime('%d/%m/%Y') }}
-                    </p>
-                    <p>Horário: {{ agendamento.horario }}</p>
-                    <p>Status: {{ agendamento.status }}</p>
 
-                    {% if agendamento.observacao %}
-                        <p>Observação: {{ agendamento.observacao }}</p>
-                    {% endif %}
-                </section>
-            {% endfor %}
+        <div class="filtros-agendamentos">
+
+    <div class="campo-filtro">
+        <label for="filtro-servico">Pesquisar serviço</label>
+        <input
+            type="text"
+            id="filtro-servico"
+            placeholder="Ex.: Botox, Corte..."
+        >
+    </div>
+
+    <div class="campo-filtro">
+        <label for="filtro-status">Status</label>
+        <select id="filtro-status">
+            <option value="">Todos os status</option>
+            <option value="pendente">Pendente</option>
+            <option value="confirmado">Confirmado</option>
+            <option value="cancelado">Cancelado</option>
+            <option value="concluido">Concluído</option>
+            <option value="faltou">Não compareceu</option>
+        </select>
+    </div>
+
+    <div class="campo-filtro">
+        <label for="filtro-data">Data</label>
+        <input type="date" id="filtro-data">
+    </div>
+
+    <button type="button" id="limpar-filtros">
+        Limpar filtros
+    </button>
+
+</div>
+            <div class="lista-agendamentos">
+
+                {% for agendamento in agendamentos %}
+
+                    <article
+    class="cartao-agendamento"
+    data-servico="{{ agendamento.servico | lower }}"
+    data-status="{{ agendamento.status }}"
+    data-data="{{ agendamento.data.strftime('%Y-%m-%d') }}"
+>
+
+                        <div class="topo-cartao-agendamento">
+
+                            <div>
+                                <span class="identificacao-agendamento">
+                                    SEU SERVIÇO
+                                </span>
+
+                                <h2>{{ agendamento.servico }}</h2>
+                            </div>
+
+                            <span class="status-agendamento status-{{ agendamento.status }}">
+                                {% if agendamento.status == 'concluido' %}
+                                    Concluído
+                                {% elif agendamento.status == 'faltou' %}
+                                    Não compareceu
+                                {% else %}
+                                    {{ agendamento.status|capitalize }}
+                                {% endif %}
+                            </span>
+
+                        </div>
+
+                        <div class="detalhes-agendamento">
+
+                            <div class="item-detalhe-agendamento">
+                                <span>Data</span>
+                                <strong>
+                                    {{ agendamento.data.strftime('%d/%m/%Y') }}
+                                </strong>
+                            </div>
+
+                            <div class="item-detalhe-agendamento">
+                                <span>Horário</span>
+                                <strong>{{ agendamento.horario }}</strong>
+                            </div>
+
+                        </div>
+
+                        {% if agendamento.observacao %}
+
+                            <div class="observacao-agendamento">
+                                <span>Observação</span>
+                                <p>{{ agendamento.observacao }}</p>
+                            </div>
+
+                        {% endif %}
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
         {% else %}
-            <section>
-                <h3>Nenhum agendamento encontrado</h3>
-                <p>Você ainda não possui horários agendados.</p>
-                <a href="{{ url_for('auth.novo_agendamento') }}">
+
+            <section class="estado-vazio-agendamentos">
+
+                <div class="icone-agendamento-vazio">
+                    <span>♡</span>
+                </div>
+
+                <h2>Nenhum agendamento encontrado</h2>
+
+                <p>
+                    Você ainda não possui horários agendados.
+                    Que tal reservar seu próximo momento de cuidado?
+                </p>
+
+                <a
+                    href="{{ url_for('auth.novo_agendamento') }}"
+                    class="botao-agendamento-vazio"
+                >
                     Fazer agendamento
                 </a>
+
             </section>
+
         {% endif %}
+
     </main>
+
+    <footer class="rodape-cliente">
+        <p>&copy; 2026 Bela Essência. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+    const filtroServico = document.getElementById("filtro-servico");
+    const filtroStatus = document.getElementById("filtro-status");
+    const filtroData = document.getElementById("filtro-data");
+    const botaoLimpar = document.getElementById("limpar-filtros");
+
+    const cartoes = document.querySelectorAll(".cartao-agendamento");
+
+    const lista = document.querySelector(".lista-agendamentos");
+
+    const mensagemSemResultados = document.createElement("p");
+
+    mensagemSemResultados.className = "mensagem-sem-resultados";
+    mensagemSemResultados.textContent =
+        "Nenhum agendamento corresponde aos filtros selecionados.";
+
+    mensagemSemResultados.hidden = true;
+
+    if (lista) {
+        lista.after(mensagemSemResultados);
+    }
+
+    function filtrarAgendamentos() {
+
+        const servico = filtroServico.value.trim().toLowerCase();
+        const status = filtroStatus.value;
+        const data = filtroData.value;
+
+        let encontrados = 0;
+
+        cartoes.forEach(function(cartao) {
+
+            const nomeServico = cartao.dataset.servico;
+            const statusAgendamento = cartao.dataset.status;
+            const dataAgendamento = cartao.dataset.data;
+
+            const correspondeServico =
+                nomeServico.includes(servico);
+
+            const correspondeStatus =
+                !status || statusAgendamento === status;
+
+            const correspondeData =
+                !data || dataAgendamento === data;
+
+            const exibir =
+                correspondeServico &&
+                correspondeStatus &&
+                correspondeData;
+
+            cartao.hidden = !exibir;
+
+            if (exibir) {
+                encontrados++;
+            }
+
+        });
+
+        mensagemSemResultados.hidden = encontrados > 0;
+
+    }
+
+    filtroServico.addEventListener("input", filtrarAgendamentos);
+    filtroStatus.addEventListener("change", filtrarAgendamentos);
+    filtroData.addEventListener("change", filtrarAgendamentos);
+
+    botaoLimpar.addEventListener("click", function() {
+
+        filtroServico.value = "";
+        filtroStatus.value = "";
+        filtroData.value = "";
+
+        filtrarAgendamentos();
+
+    });
+</script>
 </body>
 </html>

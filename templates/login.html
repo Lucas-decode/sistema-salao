@@ -7,32 +7,73 @@
     <title>Entrar | Sistema Salão</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body>
-    <main>
-        <h1>Bem-vindo(a)!</h1>
-        <p>Entre na sua conta para continuar.</p>
+<body class="pagina-login">
 
-        {% with mensagens = get_flashed_messages(with_categories=true) %}
-            {% for categoria, mensagem in mensagens %}
-                <p>{{ mensagem }}</p>
-            {% endfor %}
-        {% endwith %}
+    <header class="cabecalho-login">
+        <a href="{{ url_for('inicio') }}" class="marca-login">
+            Bela <span>Essência</span>
+        </a>
 
-        <form method="POST">
-            <label for="email">E-mail</label>
-            <input type="email" id="email" name="email"
-                   required maxlength="150">
+    </header>
 
-            <label for="senha">Senha</label>
-            <input type="password" id="senha" name="senha"
-                   required>
+    <main class="conteudo-login">
+        <section class="cartao-login">
 
-            <button type="submit">Entrar</button>
-        </form>
+            <div class="introducao-login">
+                <span class="subtitulo-login">SEU MOMENTO, SEU CUIDADO</span>
+                <h1>Bem-vindo(a) de volta!</h1>
+                <p>Entre na sua conta para continuar.</p>
+            </div>
 
-        <p>Ainda não tem uma conta?
-            <a href="{{ url_for('auth.cadastro') }}">Cadastre-se</a>
-        </p>
+            {% with mensagens = get_flashed_messages(with_categories=true) %}
+                {% for categoria, mensagem in mensagens %}
+                    <div class="mensagem mensagem-{{ categoria }}" role="alert">
+                        {{ mensagem }}
+                    </div>
+                {% endfor %}
+            {% endwith %}
+
+            <form method="POST">
+
+                <div class="campo-login">
+                    <label for="email">E-mail</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        autocomplete="username"
+                        maxlength="150"
+                        value="{{ request.form.get('email', '') }}"
+                        required
+                    >
+                </div>
+
+                <div class="campo-login">
+                    <label for="senha">Senha</label>
+                    <input
+                        type="password"
+                        id="senha"
+                        name="senha"
+                        autocomplete="current-password"
+                        required
+                    >
+                </div>
+
+                <button type="submit">Entrar na minha conta</button>
+
+            </form>
+
+            <p class="cadastro-login">
+                Ainda não tem uma conta?
+                <a href="{{ url_for('auth.cadastro') }}">Cadastre-se</a>
+            </p>
+
+            <a href="{{ url_for('inicio') }}" class="voltar-inicio">
+                Voltar à página inicial
+            </a>
+
+        </section>
     </main>
+
 </body>
 </html>

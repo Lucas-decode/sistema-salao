@@ -4,80 +4,205 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Configurar horários | Sistema Salão</title>
+
+    <title>Horários de funcionamento | Bela Essência</title>
+
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body>
-    <header>
-        <h1>Sistema Salão</h1>
+
+<body class="pagina-configurar-horarios">
+
+    <header class="cabecalho-login">
+        <a href="{{ url_for('inicio') }}" class="marca-login">
+            Bela <span>Essência</span>
+        </a>
+
         <nav>
-            <a href="{{ url_for('auth.painel_proprietario') }}">Voltar ao painel</a>
-            <a href="{{ url_for('auth.logout') }}">Sair</a>
+            <a href="{{ url_for('auth.painel_proprietario') }}" class="botao-voltar-horarios">
+                Voltar ao painel
+            </a>
+
+            <a href="{{ url_for('auth.logout') }}" class="botao-sair">
+                Sair da conta
+            </a>
         </nav>
     </header>
 
-    <main>
-        <h2>Horários de funcionamento</h2>
+    <main class="conteudo-horarios">
 
-        <p>Configure os horários de abertura e fechamento do salão.</p>
+        <div class="introducao-horarios">
+            <span class="etiqueta-horarios">GESTÃO DO SALÃO</span>
+
+            <h2>Horários de funcionamento</h2>
+
+            <p>
+                Configure separadamente os períodos da manhã e da tarde
+                de cada dia da semana.
+            </p>
+        </div>
 
         {% with mensagens = get_flashed_messages(with_categories=true) %}
-            {% if mensagens %}
-                {% for categoria, mensagem in mensagens %}
-                    <div class="mensagem-{{ categoria }}">
-                        {{ mensagem }}
-                    </div>
-                {% endfor %}
-            {% endif %}
+            {% for categoria, mensagem in mensagens %}
+                <div class="mensagem mensagem-{{ categoria }}">
+                    <span>{{ mensagem }}</span>
+
+                    <button
+                        type="button"
+                        class="fechar-mensagem"
+                        aria-label="Fechar mensagem"
+                    >&times;</button>
+                </div>
+            {% endfor %}
         {% endwith %}
 
-        {% if periodos %}
-            {% for periodo in periodos %}
-                <section>
-                    <h3>{{ periodo.nome_dia }}</h3>
+        <div class="lista-horarios">
 
-                    <form method="POST" action="{{ url_for('auth.configurar_horarios') }}">
-                        <input type="hidden" name="periodo_id" value="{{ periodo.id }}">
+            {% if periodos %}
 
-                        <p>
-                            <label for="abertura_{{ periodo.id }}">Horário de abertura:</label>
-                            <input
-                                type="time"
-                                id="abertura_{{ periodo.id }}"
-                                name="hora_abertura"
-                                value="{{ periodo.hora_abertura }}"
-                                required
-                            >
-                        </p>
+                {% for dia, periodos_dia in periodos|groupby('dia_semana') %}
 
-                        <p>
-                            <label for="fechamento_{{ periodo.id }}">Horário de fechamento:</label>
-                            <input
-                                type="time"
-                                id="fechamento_{{ periodo.id }}"
-                                name="hora_fechamento"
-                                value="{{ periodo.hora_fechamento }}"
-                                required
-                            >
-                        </p>
+                    <section class="cartao-dia-horarios">
 
-                        <p>
-                            <input
-                                type="checkbox"
-                                id="ativo_{{ periodo.id }}"
-                                name="ativo"
-                                {% if periodo.ativo %}checked{% endif %}
-                            >
-                            <label for="ativo_{{ periodo.id }}">Período ativo</label>
-                        </p>
+                        <div class="cabecalho-dia-horarios">
+                            <h3>{{ periodos_dia[0].nome_dia }}</h3>
+                            <span class="icone-horario">◷</span>
+                        </div>
 
-                        <button type="submit">Salvar alterações</button>
-                    </form>
-                </section>
-            {% endfor %}
-        {% else %}
-            <p>Nenhum período de funcionamento cadastrado.</p>
-        {% endif %}
+                        <div class="periodos-dia-grid">
+
+                            {% for periodo in periodos_dia %}
+
+                                <div class="cartao-periodo-horario">
+
+                                    <div class="cabecalho-periodo-horario">
+
+                                        <div class="identificacao-periodo">
+                                            {% if periodo.hora_abertura < '12:00' %}
+                                                <span class="icone-periodo">☀</span>
+                                                <h4>MANHÃ</h4>
+                                            {% else %}
+                                                <span class="icone-periodo">🌤</span>
+                                                <h4>TARDE</h4>
+                                            {% endif %}
+                                        </div>
+
+                                        <span class="estado-horario {{ 'horario-ativo' if periodo.ativo else 'horario-inativo' }}">
+                                            {{ 'Ativo' if periodo.ativo else 'Desativado' }}
+                                        </span>
+
+                                    </div>
+
+                                    <form
+                                        method="POST"
+                                        action="{{ url_for('auth.configurar_horarios') }}"
+                                        class="formulario-horario"
+                                    >
+
+                                        <input
+                                            type="hidden"
+                                            name="periodo_id"
+                                            value="{{ periodo.id }}"
+                                        >
+
+                                        <div class="campos-horario">
+
+                                            <div class="campo-horario">
+                                                <label for="abertura_{{ periodo.id }}">
+                                                    Abertura
+                                                </label>
+
+                                                <input
+                                                    type="time"
+                                                    id="abertura_{{ periodo.id }}"
+                                                    name="hora_abertura"
+                                                    value="{{ periodo.hora_abertura }}"
+                                                    required
+                                                >
+                                            </div>
+
+                                            <div class="campo-horario">
+                                                <label for="fechamento_{{ periodo.id }}">
+                                                    Fechamento
+                                                </label>
+
+                                                <input
+                                                    type="time"
+                                                    id="fechamento_{{ periodo.id }}"
+                                                    name="hora_fechamento"
+                                                    value="{{ periodo.hora_fechamento }}"
+                                                    required
+                                                >
+                                            </div>
+
+                                        </div>
+
+                                        <div class="rodape-horario">
+
+                                            <label class="controle-ativo" for="ativo_{{ periodo.id }}">
+                                                <input
+                                                    type="checkbox"
+                                                    id="ativo_{{ periodo.id }}"
+                                                    name="ativo"
+                                                    {% if periodo.ativo %}checked{% endif %}
+                                                >
+
+                                                <span>Período ativo</span>
+                                            </label>
+
+                                            <button type="submit" class="botao-salvar-horario">
+                                                Salvar
+                                            </button>
+
+                                        </div>
+
+                                    </form>
+
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+                    </section>
+
+                {% endfor %}
+
+            {% else %}
+
+                <div class="horarios-vazios">
+                    <h3>Nenhum horário cadastrado</h3>
+                    <p>Nenhum período de funcionamento foi encontrado.</p>
+                </div>
+
+            {% endif %}
+
+        </div>
+
     </main>
+
+    <script>
+        document.querySelectorAll(".mensagem").forEach(function (mensagem) {
+            const botaoFechar = mensagem.querySelector(".fechar-mensagem");
+            let removida = false;
+
+            function removerMensagem() {
+                if (removida) return;
+
+                removida = true;
+                mensagem.classList.add("saindo");
+
+                setTimeout(function () {
+                    mensagem.remove();
+                }, 400);
+            }
+
+            if (botaoFechar) {
+                botaoFechar.addEventListener("click", removerMensagem);
+            }
+
+            setTimeout(removerMensagem, 4500);
+        });
+    </script>
+
 </body>
 </html>

@@ -5,35 +5,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Agendamentos | Sistema Salão</title>
+    <title>Agendamentos | Bela Essência</title>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
-<body>
+<body class="pagina-agendamentos-admin">
 
-    <header>
-        <h1>Sistema Salão</h1>
+    <header class="cabecalho-login">
+        <a href="{{ url_for('inicio') }}" class="marca-login">
+            Bela <span>Essência</span>
+        </a>
 
-        <nav>
-            <a href="{{ url_for('auth.painel_proprietario') }}">
+        <nav class="nav-agendamentos">
+            <a href="{{ url_for('auth.painel_proprietario') }}" class="botao-voltar-agendamentos">
                 Voltar ao painel
             </a>
 
-            <a href="{{ url_for('auth.logout') }}">
-                Sair
+            <a href="{{ url_for('auth.logout') }}" class="botao-sair">
+                Sair da conta
             </a>
         </nav>
     </header>
 
-    <main>
-        <h2>Agendamentos dos clientes</h2>
+    <main class="conteudo-agendamentos-admin">
 
-        <p>
-            Consulte os horários reservados e acompanhe a situação de cada atendimento.
-        </p>
+        <section class="introducao-agendamentos">
+            <span class="subtitulo-admin">GESTÃO DO SALÃO</span>
 
-        {# Exibe mensagens de retorno das operações #}
+            <h1>Agendamentos</h1>
+
+            <p>
+                Consulte as reservas, acompanhe os atendimentos
+                e atualize a situação de cada cliente.
+            </p>
+        </section>
+
         {% with mensagens = get_flashed_messages(with_categories=true) %}
             {% if mensagens %}
                 <div class="mensagens">
@@ -48,13 +55,47 @@
 
         {% if agendamentos %}
 
+            <section class="filtros-admin">
+
+                <div class="campo-filtro-admin">
+                    <label for="buscar-agendamento">Buscar cliente ou serviço</label>
+                    <input
+                        type="search"
+                        id="buscar-agendamento"
+                        placeholder="Digite um nome ou serviço..."
+                    >
+                </div>
+
+                <div class="campo-filtro-admin">
+                    <label for="filtro-status-admin">Status</label>
+                    <select id="filtro-status-admin">
+                        <option value="">Todos os status</option>
+                        <option value="pendente">Pendente</option>
+                        <option value="confirmado">Confirmado</option>
+                        <option value="cancelado">Cancelado</option>
+                        <option value="concluido">Concluído</option>
+                        <option value="faltou">Faltou</option>
+                    </select>
+                </div>
+
+                <div class="campo-filtro-admin">
+                    <label for="filtro-data-admin">Data</label>
+                    <input type="date" id="filtro-data-admin">
+                </div>
+
+                <button type="button" id="limpar-filtros-admin">
+                    Limpar filtros
+                </button>
+
+            </section>
+
             <div class="tabela-responsiva">
                 <table class="tabela-agendamentos">
 
                     <thead>
                         <tr>
                             <th>Cliente</th>
-                            <th>telefone</th>
+                            <th>Telefone</th>
                             <th>Serviço</th>
                             <th>Comprimento</th>
                             <th>Preço</th>
@@ -62,7 +103,8 @@
                             <th>Data</th>
                             <th>Horário</th>
                             <th>Status</th>
-                            <th>Observação</th>
+                            <th>Observação do cliente</th>
+                            <th>Atendimento</th>
                             <th>Gerenciar</th>
                         </tr>
                     </thead>
@@ -70,45 +112,44 @@
                     <tbody>
                         {% for agendamento in agendamentos %}
 
-                            <tr>
-                                <td>
-    {{ agendamento.nome_cliente }}
-</td>
+                            <tr
+                                class="linha-agendamento-admin"
+                                data-cliente="{{ agendamento.nome_cliente | lower }}"
+                                data-servico="{{ agendamento.nome_servico | lower }}"
+                                data-status="{{ agendamento.status }}"
+                                data-data="{{ agendamento.data.strftime('%Y-%m-%d') }}"
+                                data-telefone="{{ agendamento.telefone_cliente or '' }}"
+                            >
 
-<td>
-    {% set telefone = agendamento.telefone_cliente or "" %}
-    {% if telefone|length == 11 %}
-        ({{ telefone[:2] }}) {{ telefone[2:7] }}-{{ telefone[7:] }}
-    {% elif telefone %}
-        {{ telefone }}
-    {% else %}
-        Não informado
-    {% endif %}
-</td>
-
-<td>
-    {{ agendamento.nome_servico }}
-</td>
+                                <td>{{ agendamento.nome_cliente }}</td>
 
                                 <td>
-                                    {{ agendamento.comprimento or "—" }}
+                                    {% set telefone = agendamento.telefone_cliente or "" %}
+
+                                    {% if telefone|length == 11 %}
+                                        ({{ telefone[:2] }}) {{ telefone[2:7] }}-{{ telefone[7:] }}
+                                    {% elif telefone %}
+                                        {{ telefone }}
+                                    {% else %}
+                                        Não informado
+                                    {% endif %}
                                 </td>
+
+                                <td>{{ agendamento.nome_servico }}</td>
+
+                                <td>{{ agendamento.comprimento or "—" }}</td>
 
                                 <td>
                                     R$ {{ "%.2f"|format(agendamento.preco|float) }}
                                 </td>
 
-                                <td>
-                                    {{ agendamento.duracao_minutos }} min
-                                </td>
+                                <td>{{ agendamento.duracao_minutos }} min</td>
 
                                 <td>
                                     {{ agendamento.data.strftime('%d/%m/%Y') }}
                                 </td>
 
-                                <td>
-                                    {{ agendamento.horario }}
-                                </td>
+                                <td>{{ agendamento.horario }}</td>
 
                                 <td>
                                     <span class="status status-{{ agendamento.status }}">
@@ -133,11 +174,39 @@
                                 </td>
 
                                 <td>
+                                    {% if agendamento.status_atendimento %}
+                                        <strong>
+                                            {% if agendamento.status_atendimento == 'compareceu' %}
+                                                Compareceu
+                                            {% else %}
+                                                Faltou
+                                            {% endif %}
+                                        </strong>
+
+                                        {% if agendamento.valor_final is not none %}
+                                            <p>
+                                                Valor final:
+                                                R$ {{ "%.2f"|format(agendamento.valor_final|float) }}
+                                            </p>
+                                        {% endif %}
+
+                                        {% if agendamento.observacao_atendimento %}
+                                            <p>
+                                                {{ agendamento.observacao_atendimento }}
+                                            </p>
+                                        {% endif %}
+                                    {% else %}
+                                        —
+                                    {% endif %}
+                                </td>
+
+                                <td>
                                     <form
                                         method="POST"
                                         action="{{ url_for('auth.gerenciar_agendamentos') }}"
-                                        class="form-status"
+                                        class="form-status-admin"
                                     >
+
                                         <input
                                             type="hidden"
                                             name="agendamento_id"
@@ -151,49 +220,75 @@
                                         <select
                                             name="status"
                                             id="status-{{ agendamento.id }}"
+                                            class="select-status-admin"
                                             required
                                         >
-                                            <option
-                                                value="pendente"
-                                                {% if agendamento.status == 'pendente' %}selected{% endif %}
-                                            >
+                                            <option value="pendente"
+                                                {% if agendamento.status == 'pendente' %}selected{% endif %}>
                                                 Pendente
                                             </option>
 
-                                            <option
-                                                value="confirmado"
-                                                {% if agendamento.status == 'confirmado' %}selected{% endif %}
-                                            >
+                                            <option value="confirmado"
+                                                {% if agendamento.status == 'confirmado' %}selected{% endif %}>
                                                 Confirmado
                                             </option>
 
-                                            <option
-                                                value="cancelado"
-                                                {% if agendamento.status == 'cancelado' %}selected{% endif %}
-                                            >
+                                            <option value="cancelado"
+                                                {% if agendamento.status == 'cancelado' %}selected{% endif %}>
                                                 Cancelado
                                             </option>
 
-                                            <option
-                                                value="concluido"
-                                                {% if agendamento.status == 'concluido' %}selected{% endif %}
-                                            >
+                                            <option value="concluido"
+                                                {% if agendamento.status == 'concluido' %}selected{% endif %}>
                                                 Concluído
                                             </option>
 
-                                            <option
-                                                value="faltou"
-                                                {% if agendamento.status == 'faltou' %}selected{% endif %}
-                                            >
+                                            <option value="faltou"
+                                                {% if agendamento.status == 'faltou' %}selected{% endif %}>
                                                 Faltou
                                             </option>
                                         </select>
 
-                                        <button type="submit">
+                                        <div class="campos-atendimento-admin">
+
+                                            <div class="campo-valor-final">
+                                                <label for="valor-{{ agendamento.id }}">
+                                                    Valor final (R$)
+                                                </label>
+
+                                                <input
+                                                    type="number"
+                                                    name="valor_final"
+                                                    id="valor-{{ agendamento.id }}"
+                                                    min="0"
+                                                    step="0.01"
+                                                    placeholder="Ex.: 120,00"
+                                                    value="{{ agendamento.valor_final if agendamento.valor_final is not none else '' }}"
+                                                >
+                                            </div>
+
+                                            <div>
+                                                <label for="observacao-{{ agendamento.id }}">
+                                                    Observação do atendimento
+                                                </label>
+
+                                                <textarea
+                                                    name="observacao_atendimento"
+                                                    id="observacao-{{ agendamento.id }}"
+                                                    rows="2"
+                                                    placeholder="Observações sobre o atendimento..."
+                                                >{{ agendamento.observacao_atendimento or '' }}</textarea>
+                                            </div>
+
+                                        </div>
+
+                                        <button type="submit" class="botao-atualizar-admin">
                                             Atualizar
                                         </button>
+
                                     </form>
                                 </td>
+
                             </tr>
 
                         {% endfor %}
@@ -202,19 +297,120 @@
                 </table>
             </div>
 
+            <p id="nenhum-resultado-admin" class="mensagem-sem-resultados-admin" hidden>
+                Nenhum agendamento corresponde aos filtros selecionados.
+            </p>
+
         {% else %}
 
-            <p>Nenhum agendamento cadastrado até o momento.</p>
+            <section class="estado-vazio-admin">
+                <h2>Nenhum agendamento cadastrado</h2>
+                <p>
+                    Quando os clientes realizarem reservas,
+                    elas aparecerão nesta página.
+                </p>
+            </section>
 
         {% endif %}
 
-        <p>
-            <a href="{{ url_for('auth.painel_proprietario') }}">
-                Voltar ao painel administrativo
-            </a>
-        </p>
+        <a href="{{ url_for('auth.painel_proprietario') }}" class="link-voltar-admin">
+            Voltar ao painel administrativo
+        </a>
 
     </main>
+
+    <script>
+        // Filtros da agenda administrativa.
+        const buscaAdmin = document.getElementById("buscar-agendamento");
+        const statusAdmin = document.getElementById("filtro-status-admin");
+        const dataAdmin = document.getElementById("filtro-data-admin");
+        const limparAdmin = document.getElementById("limpar-filtros-admin");
+        const linhasAdmin = document.querySelectorAll(".linha-agendamento-admin");
+        const mensagemVaziaAdmin = document.getElementById("nenhum-resultado-admin");
+
+        function filtrarAgendamentosAdmin() {
+            const busca = buscaAdmin.value.trim().toLowerCase();
+            const status = statusAdmin.value;
+            const data = dataAdmin.value;
+
+            let encontrados = 0;
+
+            linhasAdmin.forEach(linha => {
+                const cliente = linha.dataset.cliente || "";
+                const servico = linha.dataset.servico || "";
+                const telefone = linha.dataset.telefone || "";
+
+                const correspondeBusca =
+                    cliente.includes(busca) ||
+                    servico.includes(busca) ||
+                    telefone.includes(busca);
+
+                const correspondeStatus =
+                    !status || linha.dataset.status === status;
+
+                const correspondeData =
+                    !data || linha.dataset.data === data;
+
+                const mostrar =
+                    correspondeBusca &&
+                    correspondeStatus &&
+                    correspondeData;
+
+                linha.hidden = !mostrar;
+
+                if (mostrar) {
+                    encontrados++;
+                }
+            });
+
+            if (mensagemVaziaAdmin) {
+                mensagemVaziaAdmin.hidden = encontrados !== 0;
+            }
+        }
+
+        if (buscaAdmin) {
+            buscaAdmin.addEventListener("input", filtrarAgendamentosAdmin);
+            statusAdmin.addEventListener("change", filtrarAgendamentosAdmin);
+            dataAdmin.addEventListener("change", filtrarAgendamentosAdmin);
+
+            limparAdmin.addEventListener("click", () => {
+                buscaAdmin.value = "";
+                statusAdmin.value = "";
+                dataAdmin.value = "";
+
+                filtrarAgendamentosAdmin();
+            });
+        }
+
+        // O valor final é obrigatório somente quando o status é concluído.
+        document.querySelectorAll(".form-status-admin").forEach(formulario => {
+            const seletorStatus = formulario.querySelector(".select-status-admin");
+            const campoValor = formulario.querySelector('[name="valor_final"]');
+
+            function atualizarCampoValor() {
+                const concluido = seletorStatus.value === "concluido";
+
+                campoValor.required = concluido;
+            }
+
+            seletorStatus.addEventListener("change", atualizarCampoValor);
+
+            formulario.addEventListener("submit", evento => {
+                atualizarCampoValor();
+
+                if (
+                    seletorStatus.value === "concluido" &&
+                    campoValor.value.trim() === ""
+                ) {
+                    evento.preventDefault();
+                    campoValor.focus();
+                    alert("Informe o valor final para concluir o atendimento.");
+                }
+            });
+
+            atualizarCampoValor();
+        });
+    </script>
 
 </body>
 </html>

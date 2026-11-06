@@ -4,34 +4,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Área do Cliente | Sistema Salão</title>
+    <title>Área do Cliente | Bela Essência</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body>
-    <header>
-        <h1>Sistema Salão</h1>
+
+<body class="pagina-cliente">
+
+    <header class="cabecalho-cliente">
+        <a href="{{ url_for('inicio') }}" class="marca-login">
+            Bela <span>Essência</span>
+        </a>
+
         <nav>
-            <a href="{{ url_for('auth.logout') }}">Sair</a>
+            <a href="{{ url_for('auth.logout') }}" class="botao-sair">
+                Sair da conta
+            </a>
         </nav>
     </header>
 
-    <main>
-        <h2>Olá, {{ session['nome'] }}!</h2>
-        <p>Bem-vindo(a) à sua área do cliente.</p>
+    <main class="conteudo-cliente">
 
-        <section>
-            <h3>Agende seu horário</h3>
-            <p>Escolha o serviço e encontre um horário disponível.</p>
-            <a href="{{ url_for('auth.novo_agendamento') }}">Novo agendamento</a>
+        <section class="boas-vindas-cliente">
+            <span class="subtitulo-login">SEU MOMENTO, SEU CUIDADO</span>
+
+            <h1>Olá, {{ session['nome'] }}!</h1>
+
+            <p>
+                Seja bem-vindo(a) à sua área do cliente.
+                Estamos felizes em cuidar de você!
+            </p>
         </section>
 
-        <section>
-    <h3>Meus agendamentos</h3>
-    <p>Consulte seus horários e acompanhe suas reservas.</p>
-    <a href="{{ url_for('auth.meus_agendamentos') }}">
-        Ver meus agendamentos
-    </a>
-</section>
+        <div class="titulo-secao-cliente">
+            <h2>O que deseja fazer hoje?</h2>
+            <p>Gerencie seus horários de maneira simples e rápida.</p>
+        </div>
+
+        <div class="cartoes-cliente">
+
+            <section class="cartao-cliente">
+                <span class="numero-cartao-cliente">01</span>
+
+                <h3>Agende seu horário</h3>
+
+                <p>
+                    Escolha o serviço desejado e encontre
+                    um horário disponível para você.
+                </p>
+
+                <a
+                    href="{{ url_for('auth.novo_agendamento') }}"
+                    class="botao-cliente botao-cliente-principal"
+                >
+                    Fazer agendamento
+                </a>
+            </section>
+
+            <section class="cartao-cliente">
+                <span class="numero-cartao-cliente">02</span>
+
+                <h3>Meus agendamentos</h3>
+
+                <p>
+                    Consulte suas reservas e acompanhe
+                    os horários dos seus atendimentos.
+                </p>
+
+                <a
+                    href="{{ url_for('auth.meus_agendamentos') }}"
+                    class="botao-cliente botao-cliente-secundario"
+                >
+                    Consultar agendamentos
+                </a>
+            </section>
+
+        </div>
+
     </main>
+
+    <footer class="rodape-cliente">
+        <p>&copy; 2026 Bela Essência. Todos os direitos reservados.</p>
+    </footer>
+
 </body>
 </html>

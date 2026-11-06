@@ -4,26 +4,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema Salão</title>
+    <meta name="description" content="Bela Essência - Agende seu horário de beleza de forma simples e prática.">
+    <title>Bela Essência | Salão de Beleza</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body>
-    <header>
-        <h1>Sistema Salão</h1>
-        <nav>
+<body class="pagina-inicial">
+
+    <header class="cabecalho">
+        <a href="{{ url_for('inicio') }}" class="marca">
+            Bela <span>Essência</span>
+        </a>
+
+        <nav class="menu">
             <a href="{{ url_for('auth.login') }}">Entrar</a>
-            <a href="{{ url_for('auth.cadastro') }}">Criar conta</a>
+            <a href="{{ url_for('auth.cadastro') }}" class="botao-menu">Criar conta</a>
         </nav>
     </header>
 
     <main>
-        <h2>Seu momento de cuidado começa aqui.</h2>
-        <p>
-            Agende seu horário de forma simples e rápida.
-        </p>
+        <section class="destaque">
+            <div class="destaque-conteudo">
+                <span class="subtitulo">SEU MOMENTO, SEU CUIDADO</span>
 
-        <a href="{{ url_for('auth.login') }}">Fazer agendamento</a>
-        <a href="{{ url_for('auth.cadastro') }}">Criar minha conta</a>
+                <h1>
+                    Sua beleza merece
+                    <span>um momento especial.</span>
+                </h1>
+
+                <p>
+                    Escolha seu serviço, encontre o melhor horário
+                    e agende seu atendimento de maneira simples e rápida.
+                </p>
+
+                <div class="acoes-destaque">
+                    <a href="{{ url_for('auth.login') }}" class="botao-principal">
+                        Fazer agendamento
+                    </a>
+
+                    <a href="{{ url_for('auth.cadastro') }}" class="botao-secundario">
+                        Criar minha conta
+                    </a>
+                </div>
+            </div>
+
+            <div class="destaque-imagem">
+    <img
+        src="{{ url_for('static', filename='images/ilustracao-feminina-bela-essencia.png') }}"
+        alt="Ilustração de uma mulher com cabelos longos e ondulados"
+        class="ilustracao-salao"
+    >
+</div>
+        </section>
+
+        <section class="beneficios">
+            <article>
+                <span class="icone-beneficio">01</span>
+                <h2>Escolha seu serviço</h2>
+                <p>Consulte os serviços disponíveis e seus valores.</p>
+            </article>
+
+            <article>
+                <span class="icone-beneficio">02</span>
+                <h2>Encontre seu horário</h2>
+                <p>Visualize os horários disponíveis para atendimento.</p>
+            </article>
+
+            <article>
+                <span class="icone-beneficio">03</span>
+                <h2>Agende com facilidade</h2>
+                <p>Faça sua reserva de forma prática e organizada.</p>
+            </article>
+        </section>
     </main>
+
+    <footer class="rodape">
+        <p>&copy; 2026 Bela Essência. Todos os direitos reservados.</p>
+    </footer>
+
 </body>
 </html>

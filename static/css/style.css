@@ -1,3 +1,13 @@
+/*
+  BELA ESSÊNCIA — FOLHA DE ESTILOS
+  Versão revisada com preservação da cascata original.
+
+  Observação:
+  Algumas regras no final do arquivo sobrescrevem intencionalmente
+  regras anteriores para ajustes específicos de páginas e responsividade.
+  Elas foram mantidas para evitar alterações visuais ou funcionais
+  sem validação das respectivas telas.
+*/
 
 * {
     margin: 0;
@@ -374,4 +384,3735 @@ select:disabled {
         scroll-behavior: auto !important;
         transition-duration: 0.01ms !important;
     }
+}
+
+
+/* ========================================
+   PÁGINA INICIAL - BELA ESSÊNCIA
+======================================== */
+
+.pagina-inicial {
+    background: #f8f6f9;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Cabeçalho */
+
+.pagina-inicial .cabecalho {
+    width: 100%;
+    padding: 22px 8%;
+    background: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+}
+
+.pagina-inicial .marca {
+    background: none;
+    padding: 0;
+    margin: 0;
+    font-size: 25px;
+    font-weight: 700;
+    color: #713b82;
+    letter-spacing: -1px;
+}
+
+.pagina-inicial .marca span {
+    color: #29232d;
+}
+
+.pagina-inicial .menu {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.pagina-inicial .menu a {
+    background: none;
+    padding: 10px 0;
+    margin: 0;
+    color: #713b82;
+    font-size: 14px;
+}
+
+.pagina-inicial .menu .botao-menu {
+    padding: 11px 22px;
+    border-radius: 8px;
+    background: #713b82;
+    color: #ffffff;
+}
+
+/* Área principal */
+
+.pagina-inicial main {
+    width: 100%;
+    max-width: 1200px;
+    min-height: auto;
+    margin: 0 auto;
+    padding: 75px 35px 55px;
+    display: block;
+    text-align: left;
+}
+
+/* Destaque */
+
+.pagina-inicial .destaque {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 55px;
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    align-items: center;
+    gap: 50px;
+    background: #ffffff;
+    border-radius: 22px;
+    box-shadow: 0 8px 30px rgba(55, 35, 60, 0.06);
+}
+
+.pagina-inicial .subtitulo {
+    display: inline-block;
+    margin-bottom: 18px;
+    color: #8b5798;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.pagina-inicial .destaque h1 {
+    max-width: 600px;
+    margin-bottom: 20px;
+    color: #29232d;
+    font-size: 48px;
+    line-height: 1.15;
+}
+
+.pagina-inicial .destaque h1 span {
+    color: #713b82;
+}
+
+.pagina-inicial .destaque p {
+    max-width: 480px;
+    margin-bottom: 28px;
+    color: #716b75;
+    font-size: 17px;
+    line-height: 1.7;
+}
+
+.pagina-inicial .acoes-destaque {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.pagina-inicial .acoes-destaque a {
+    display: inline-block;
+    margin: 0;
+    padding: 14px 22px;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.pagina-inicial .botao-principal {
+    background: #713b82;
+    color: #ffffff;
+}
+
+.pagina-inicial .botao-principal:hover {
+    background: #572d65;
+    transform: translateY(-2px);
+}
+
+.pagina-inicial .acoes-destaque .botao-secundario {
+    background: #f2eaf5;
+    color: #713b82;
+}
+
+.pagina-inicial .botao-secundario:hover {
+    background: #e8d9ed;
+}
+
+/* Ilustração feminina */
+
+.pagina-inicial .destaque-imagem {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 280px;
+    overflow: hidden;
+}
+
+.pagina-inicial .ilustracao-salao {
+    display: block;
+    width: 100%;
+    max-width: 400px;
+    height: 320px;
+    object-fit: contain;
+}
+
+.pagina-inicial .imagem-decorativa span {
+    color: #ffffff;
+    font-family: Georgia, serif;
+    font-size: 75px;
+    font-weight: bold;
+}
+
+/* Benefícios */
+
+.pagina-inicial .beneficios {
+    width: 100%;
+    max-width: none;
+    margin: 35px 0 0;
+    padding: 35px 15px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.pagina-inicial .beneficios article {
+    padding: 28px;
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(55, 35, 60, 0.05);
+}
+
+.pagina-inicial .icone-beneficio {
+    display: inline-block;
+    margin-bottom: 16px;
+    color: #a16aaf;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.pagina-inicial .beneficios h2 {
+    margin-bottom: 12px;
+    color: #29232d;
+    font-size: 20px;
+}
+
+.pagina-inicial .beneficios p {
+    margin: 0;
+    color: #716b75;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* Rodapé */
+
+.pagina-inicial .rodape {
+    width: 100%;
+    margin-top: auto;
+    padding: 24px 15px;
+    background: #ffffff;
+    text-align: center;
+}
+
+.pagina-inicial .rodape p {
+    margin: 0;
+    color: #827b86;
+    font-size: 13px;
+}
+
+/* Responsividade */
+
+@media (max-width: 800px) {
+    .pagina-inicial main {
+        padding: 40px 20px;
+    }
+
+    .pagina-inicial .destaque {
+        grid-template-columns: 1fr;
+        padding: 35px;
+        gap: 25px;
+    }
+
+    .pagina-inicial .destaque h1 {
+        font-size: 38px;
+    }
+
+    .pagina-inicial .destaque-imagem {
+        min-height: 200px;
+    }
+
+    .pagina-inicial .ilustracao-salao {
+    max-width: 350px;
+    height: 260px;
+}
+
+.pagina-inicial .ilustracao-salao {
+    height: 220px;
+}
+
+    .pagina-inicial .beneficios {
+        grid-template-columns: 1fr;
+        padding: 20px 0;
+    }
+}
+
+@media (max-width: 500px) {
+    .pagina-inicial .cabecalho {
+        padding: 18px 20px;
+    }
+
+    .pagina-inicial .marca {
+        font-size: 21px;
+    }
+
+    .pagina-inicial .menu {
+        gap: 15px;
+    }
+
+    .pagina-inicial .menu a {
+        font-size: 12px;
+    }
+
+    .pagina-inicial .menu .botao-menu {
+        padding: 9px 12px;
+    }
+
+    .pagina-inicial .destaque {
+        padding: 27px 22px;
+    }
+
+    .pagina-inicial .destaque h1 {
+        font-size: 32px;
+    }
+
+    .pagina-inicial .destaque p {
+        font-size: 15px;
+    }
+
+    .pagina-inicial .acoes-destaque {
+        flex-direction: column;
+    }
+
+    .pagina-inicial .acoes-destaque a {
+        text-align: center;
+    }
+}
+/* ========================================
+   TELA DE LOGIN
+======================================== */
+
+.pagina-login {
+    background: #f8f6f9;
+}
+
+/* Cabeçalho */
+
+.pagina-login .cabecalho-login {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 8%;
+    background: #ffffff;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+}
+
+.pagina-login .marca-login {
+    padding: 0;
+    margin: 0;
+    background: none;
+    color: #713b82;
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.pagina-login .marca-login span {
+    color: #29232d;
+}
+
+.pagina-login .link-cadastro {
+    padding: 11px 22px;
+    border-radius: 8px;
+    background: #713b82;
+    color: #ffffff;
+    font-size: 14px;
+}
+
+.pagina-login .link-cadastro:hover {
+    background: #572d65;
+}
+
+/* Conteúdo */
+
+.pagina-login .conteudo-login {
+    min-height: 85vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+/* Cartão */
+
+.pagina-login .cartao-login {
+    width: 100%;
+    max-width: 460px;
+    margin: 0;
+    padding: 40px;
+    background: #ffffff;
+    border-radius: 18px;
+    box-shadow: 0 8px 30px rgba(55, 35, 60, 0.07);
+}
+
+.pagina-login .introducao-login {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.pagina-login .subtitulo-login {
+    color: #8b5798;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.pagina-login .introducao-login h1 {
+    margin: 15px 0 10px;
+    color: #29232d;
+    font-size: 30px;
+}
+
+.pagina-login .introducao-login p {
+    margin: 0;
+    color: #716b75;
+    font-size: 15px;
+}
+
+/* Campos */
+
+.pagina-login .campo-login {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.pagina-login .campo-login label {
+    color: #29232d;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.pagina-login .campo-login input {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #d8d1dc;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.pagina-login .campo-login input:focus {
+    border-color: #713b82;
+    box-shadow: 0 0 0 3px rgba(113, 59, 130, 0.12);
+}
+
+/* Botão */
+
+.pagina-login .cartao-login form {
+    gap: 18px;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.pagina-login .cartao-login form button {
+    width: 100%;
+    margin-top: 8px;
+    padding: 14px;
+    border-radius: 8px;
+    background: #713b82;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.pagina-login .cartao-login form button:hover {
+    background: #572d65;
+}
+
+/* Links inferiores */
+
+.pagina-login .cadastro-login {
+    margin: 25px 0 15px;
+    color: #716b75;
+    font-size: 14px;
+    text-align: center;
+}
+
+.pagina-login .cadastro-login a,
+.pagina-login .voltar-inicio {
+    color: #713b82;
+    font-weight: 700;
+}
+
+.pagina-login .voltar-inicio {
+    display: block;
+    text-align: center;
+    font-size: 13px;
+}
+
+/* Celulares */
+
+@media (max-width: 500px) {
+    .pagina-login .cabecalho-login {
+        padding: 18px 20px;
+    }
+
+    .pagina-login .marca-login {
+        font-size: 21px;
+    }
+
+    .pagina-login .cartao-login {
+        padding: 28px 22px;
+    }
+
+    .pagina-login .introducao-login h1 {
+        font-size: 26px;
+    }
+}
+/* Corrige os links internos da tela de login */
+
+.pagina-login .cadastro-login a,
+.pagina-login .voltar-inicio {
+    display: inline;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    color: #713b82;
+}
+
+.pagina-login .cadastro-login a:hover,
+.pagina-login .voltar-inicio:hover {
+    background: transparent;
+    color: #a15db5;
+}
+
+.pagina-login .voltar-inicio {
+    display: block;
+}
+
+/* ========================================
+   ÁREA DO CLIENTE
+======================================== */
+
+.pagina-cliente {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: #f8f6f9;
+}
+
+/* Cabeçalho */
+
+.cabecalho-cliente {
+    width: 100%;
+    padding: 22px 8%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #ffffff;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+}
+
+.cabecalho-cliente .marca-login {
+    font-size: 25px;
+    font-weight: 700;
+    color: #713b82;
+    text-decoration: none;
+}
+
+.cabecalho-cliente .marca-login span {
+    color: #29232d;
+}
+
+.botao-sair {
+    padding: 11px 20px;
+    border-radius: 8px;
+    background: #f2eaf5;
+    color: #713b82;
+    font-size: 14px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.botao-sair:hover {
+    background: #e8d9ed;
+}
+
+/* Conteúdo principal */
+
+.conteudo-cliente {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 65px 30px;
+    flex: 1;
+    display: block;
+    text-align: left;
+}
+
+/* Boas-vindas */
+
+.boas-vindas-cliente {
+    width: 100%;
+    margin: 0 0 45px;
+    padding: 40px;
+    background: #ffffff;
+    border-radius: 18px;
+    box-shadow: 0 6px 25px rgba(55, 35, 60, 0.05);
+}
+
+.boas-vindas-cliente .subtitulo-login {
+    display: inline-block;
+    margin-bottom: 15px;
+    color: #8b5798;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.boas-vindas-cliente h1 {
+    margin-bottom: 12px;
+    color: #29232d;
+    font-size: 32px;
+}
+
+.boas-vindas-cliente p {
+    margin: 0;
+    color: #716b75;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* Título da seção */
+
+.titulo-secao-cliente {
+    margin-bottom: 22px;
+}
+
+.titulo-secao-cliente h2 {
+    margin-bottom: 8px;
+    color: #29232d;
+    font-size: 23px;
+}
+
+.titulo-secao-cliente p {
+    margin: 0;
+    color: #716b75;
+    font-size: 14px;
+}
+
+/* Cartões */
+
+.cartoes-cliente {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.cartao-cliente {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 30px;
+    background: #ffffff;
+    border: 1px solid #f0eaf2;
+    border-radius: 16px;
+    box-shadow: 0 5px 20px rgba(55, 35, 60, 0.04);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.cartao-cliente:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 9px 25px rgba(55, 35, 60, 0.08);
+}
+
+.numero-cartao-cliente {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #a16aaf;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.cartao-cliente h3 {
+    margin-bottom: 12px;
+    color: #29232d;
+    font-size: 21px;
+}
+
+.cartao-cliente p {
+    min-height: 48px;
+    margin-bottom: 25px;
+    color: #716b75;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+/* Botões dos cartões */
+
+.botao-cliente {
+    display: inline-block;
+    padding: 13px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.botao-cliente-principal {
+    background: #713b82;
+    color: #ffffff;
+}
+
+.botao-cliente-principal:hover {
+    background: #572d65;
+    transform: translateY(-2px);
+}
+
+.botao-cliente-secundario {
+    background: #f2eaf5;
+    color: #713b82;
+}
+
+.botao-cliente-secundario:hover {
+    background: #e8d9ed;
+}
+
+/* Rodapé */
+
+.rodape-cliente {
+    width: 100%;
+    padding: 22px 15px;
+    background: #ffffff;
+    text-align: center;
+}
+
+.rodape-cliente p {
+    margin: 0;
+    color: #827b86;
+    font-size: 13px;
+}
+
+/* Responsividade */
+
+@media (max-width: 650px) {
+    .cabecalho-cliente {
+        padding: 18px 20px;
+    }
+
+    .cabecalho-cliente .marca-login {
+        font-size: 21px;
+    }
+
+    .conteudo-cliente {
+        padding: 35px 20px;
+    }
+
+    .boas-vindas-cliente {
+        padding: 28px 22px;
+        margin-bottom: 35px;
+    }
+
+    .boas-vindas-cliente h1 {
+        font-size: 26px;
+    }
+
+    .cartoes-cliente {
+        grid-template-columns: 1fr;
+    }
+
+    .cartao-cliente {
+        padding: 25px;
+    }
+
+    .cartao-cliente p {
+        min-height: auto;
+    }
+
+    .botao-cliente {
+        display: block;
+    }
+}
+
+/* ========================================
+   ÁREA DO CLIENTE - BELA ESSÊNCIA
+======================================== */
+
+.pagina-cliente {
+    background: #f8f6f9;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Cabeçalho */
+
+.pagina-cliente .cabecalho-cliente {
+    width: 100%;
+    padding: 22px 8%;
+    background: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+}
+
+.pagina-cliente .marca-login {
+    background: none;
+    padding: 0;
+    margin: 0;
+    font-size: 25px;
+    font-weight: 700;
+    color: #713b82;
+}
+
+.pagina-cliente .marca-login span {
+    color: #29232d;
+}
+
+.pagina-cliente .botao-sair {
+    display: inline-block;
+    padding: 12px 22px;
+    border-radius: 8px;
+    background: #f2eaf5;
+    color: #713b82;
+    font-size: 14px;
+}
+
+.pagina-cliente .botao-sair:hover {
+    background: #e8d9ed;
+}
+
+/* Conteúdo principal */
+
+.pagina-cliente .conteudo-cliente {
+    width: 100%;
+    max-width: 1200px;
+    min-height: auto;
+    margin: 0 auto;
+    padding: 65px 35px;
+    display: block;
+    text-align: left;
+}
+
+/* Boas-vindas */
+
+.pagina-cliente .boas-vindas-cliente {
+    width: 100%;
+    max-width: none;
+    margin: 0 0 45px;
+    padding: 45px;
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(55, 35, 60, 0.06);
+}
+
+.pagina-cliente .boas-vindas-cliente h1 {
+    margin: 12px 0;
+    color: #29232d;
+    font-size: 36px;
+}
+
+.pagina-cliente .boas-vindas-cliente p {
+    max-width: 650px;
+    margin: 0;
+    color: #716b75;
+    font-size: 17px;
+    line-height: 1.7;
+}
+
+/* Título das ações */
+
+.pagina-cliente .titulo-secao-cliente {
+    margin-bottom: 22px;
+}
+
+.pagina-cliente .titulo-secao-cliente h2 {
+    margin-bottom: 8px;
+    color: #29232d;
+    font-size: 25px;
+}
+
+.pagina-cliente .titulo-secao-cliente p {
+    margin: 0;
+    color: #716b75;
+    font-size: 15px;
+}
+
+/* Cartões */
+
+.pagina-cliente .cartoes-cliente {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 25px;
+}
+
+.pagina-cliente .cartao-cliente {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 32px;
+    background: #ffffff;
+    border: 1px solid #eee7f0;
+    border-radius: 17px;
+    box-shadow: 0 5px 20px rgba(55, 35, 60, 0.04);
+}
+
+.pagina-cliente .numero-cartao-cliente {
+    display: inline-block;
+    margin-bottom: 18px;
+    color: #a16aaf;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.pagina-cliente .cartao-cliente h3 {
+    margin-bottom: 12px;
+    color: #29232d;
+    font-size: 22px;
+}
+
+.pagina-cliente .cartao-cliente p {
+    min-height: 48px;
+    margin-bottom: 24px;
+    color: #716b75;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+/* Botões dos cartões */
+
+.pagina-cliente .botao-cliente {
+    display: inline-block;
+    padding: 13px 21px;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.pagina-cliente .botao-cliente:hover {
+    transform: translateY(-2px);
+}
+
+.pagina-cliente .botao-cliente-principal {
+    background: #713b82;
+    color: #ffffff;
+}
+
+.pagina-cliente .botao-cliente-principal:hover {
+    background: #572d65;
+}
+
+.pagina-cliente .botao-cliente-secundario {
+    background: #f2eaf5;
+    color: #713b82;
+}
+
+.pagina-cliente .botao-cliente-secundario:hover {
+    background: #e8d9ed;
+}
+
+/* Rodapé */
+
+.pagina-cliente .rodape-cliente {
+    width: 100%;
+    margin-top: auto;
+    padding: 24px 15px;
+    background: #ffffff;
+    text-align: center;
+}
+
+.pagina-cliente .rodape-cliente p {
+    margin: 0;
+    color: #827b86;
+    font-size: 13px;
+}
+
+/* Responsividade */
+
+@media (max-width: 800px) {
+    .pagina-cliente .conteudo-cliente {
+        padding: 40px 20px;
+    }
+
+    .pagina-cliente .boas-vindas-cliente {
+        padding: 32px;
+    }
+
+    .pagina-cliente .cartoes-cliente {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 500px) {
+    .pagina-cliente .cabecalho-cliente {
+        padding: 18px 20px;
+    }
+
+    .pagina-cliente .marca-login {
+        font-size: 21px;
+    }
+
+    .pagina-cliente .boas-vindas-cliente {
+        padding: 26px 22px;
+    }
+
+    .pagina-cliente .boas-vindas-cliente h1 {
+        font-size: 28px;
+    }
+
+    .pagina-cliente .cartao-cliente {
+        padding: 25px;
+    }
+}
+
+
+/* ========================================
+   NOVO AGENDAMENTO
+======================================== */
+
+.pagina-agendamento {
+    background: #f8f6f9;
+}
+
+/* Área principal */
+
+.pagina-agendamento main {
+    min-height: auto;
+    padding: 55px 20px 70px;
+    justify-content: flex-start;
+}
+
+/* Título */
+
+.pagina-agendamento main h2 {
+    margin-bottom: 12px;
+    color: #29232d;
+    font-size: 38px;
+}
+
+.pagina-agendamento main > p {
+    max-width: 650px;
+    margin-bottom: 35px;
+    line-height: 1.6;
+    text-align: center;
+}
+
+/* Remove o cartão externo da seção */
+
+.pagina-agendamento main section {
+    width: 100%;
+    max-width: 540px;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+/* Cartão do formulário */
+
+.pagina-agendamento main form {
+    width: 100%;
+    max-width: 540px;
+    padding: 35px;
+    gap: 10px;
+    background: #ffffff;
+    border: 1px solid #f0eaf2;
+    border-radius: 18px;
+    box-shadow: 0 8px 30px rgba(55, 35, 60, 0.06);
+}
+
+/* Rótulos */
+
+.pagina-agendamento main form label {
+    margin-top: 8px;
+    color: #29232d;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Campos */
+
+.pagina-agendamento main form input,
+.pagina-agendamento main form select,
+.pagina-agendamento main form textarea {
+    width: 100%;
+    min-height: 45px;
+    padding: 11px 13px;
+    border: 1px solid #d8d1dc;
+    border-radius: 8px;
+    background-color: #ffffff;
+    color: #29232d;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* Foco dos campos */
+
+.pagina-agendamento main form input:focus,
+.pagina-agendamento main form select:focus,
+.pagina-agendamento main form textarea:focus {
+    border-color: #713b82;
+    box-shadow: 0 0 0 3px rgba(113, 59, 130, 0.12);
+}
+
+/* Campos desabilitados */
+
+.pagina-agendamento main form select:disabled {
+    background: #f5f2f6;
+    color: #827b86;
+    cursor: not-allowed;
+}
+
+/* Ajuda da data */
+
+.pagina-agendamento main form small {
+    margin-top: -5px;
+    color: #827b86;
+    font-size: 12px;
+}
+
+/* Mensagem dos horários */
+
+.pagina-agendamento #mensagem-horarios {
+    margin: 2px 0 8px;
+    color: #716b75;
+    font-size: 13px;
+    line-height: 1.5;
+    text-align: left;
+}
+
+/* Observações */
+
+.pagina-agendamento main form textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Botão */
+
+.pagina-agendamento main form button {
+    width: 100%;
+    min-height: 48px;
+    margin-top: 12px;
+    border-radius: 8px;
+    background: #713b82;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.pagina-agendamento main form button:hover:not(:disabled) {
+    background: #572d65;
+}
+
+.pagina-agendamento main form button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+/* Mensagens */
+
+.pagina-agendamento main > .mensagem {
+    width: 100%;
+    max-width: 540px;
+}
+
+/* Celulares */
+
+@media (max-width: 600px) {
+    .pagina-agendamento main {
+        padding: 35px 18px 50px;
+    }
+
+    .pagina-agendamento main h2 {
+        font-size: 30px;
+    }
+
+    .pagina-agendamento main form {
+        padding: 25px 20px;
+    }
+}
+
+/* Marca do cabeçalho da página de agendamento */
+.pagina-agendamento header .marca-login {
+    font-size: 28px;
+    font-weight: bold;
+    color: #713b82;
+    text-decoration: none;
+}
+
+.pagina-agendamento header .marca-login span {
+    color: #29232d;
+}
+
+/* ========================================
+   MEUS AGENDAMENTOS
+======================================== */
+
+.pagina-meus-agendamentos {
+    background: #f8f6f9;
+}
+
+/* Conteúdo principal */
+.pagina-meus-agendamentos .conteudo-meus-agendamentos {
+    min-height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 55px 20px 70px;
+}
+
+/* Introdução */
+.introducao-agendamentos {
+    width: 100%;
+    max-width: 850px;
+    margin: 0 auto 35px;
+    text-align: center;
+}
+
+.introducao-agendamentos h1 {
+    margin: 12px 0;
+    color: #29232d;
+    font-size: 38px;
+}
+
+.introducao-agendamentos p {
+    color: #716b75;
+    line-height: 1.6;
+}
+
+/* Lista */
+.lista-agendamentos {
+    width: 100%;
+    max-width: 850px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin: 0 auto;
+}
+
+/* Cartão */
+.cartao-agendamento {
+    width: 100%;
+    padding: 25px 28px;
+    background: #ffffff;
+    border: 1px solid #f0eaf2;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(55, 35, 60, 0.05);
+}
+
+/* Cabeçalho do cartão */
+.topo-cartao-agendamento {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee8f0;
+}
+
+.identificacao-agendamento {
+    color: #8a6a92;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.topo-cartao-agendamento h2 {
+    margin-top: 6px;
+    color: #29232d;
+    font-size: 21px;
+}
+
+/* Status */
+.status-agendamento {
+    padding: 7px 13px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.status-pendente {
+    background: #fff4dc;
+    color: #91651a;
+}
+
+.status-confirmado {
+    background: #e6f4ea;
+    color: #287443;
+}
+
+.status-cancelado {
+    background: #fce8e8;
+    color: #a53c3c;
+}
+
+.status-concluido {
+    background: #eee8f5;
+    color: #713b82;
+}
+
+.status-faltou {
+    background: #f1eeee;
+    color: #655e65;
+}
+
+/* Data e horário */
+.detalhes-agendamento {
+    display: flex;
+    gap: 55px;
+    padding: 20px 0;
+}
+
+.item-detalhe-agendamento {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.item-detalhe-agendamento span,
+.observacao-agendamento span {
+    color: #827b86;
+    font-size: 13px;
+}
+
+.item-detalhe-agendamento strong {
+    color: #29232d;
+    font-size: 15px;
+}
+
+/* Observação */
+.observacao-agendamento {
+    padding-top: 15px;
+    border-top: 1px solid #eee8f0;
+}
+
+.observacao-agendamento p {
+    margin-top: 7px;
+    color: #514b55;
+    font-size: 14px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+/* Estado vazio */
+.estado-vazio-agendamentos {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 45px 30px;
+    background: #ffffff;
+    border: 1px solid #f0eaf2;
+    border-radius: 16px;
+    box-shadow: 0 5px 20px rgba(55, 35, 60, 0.05);
+    text-align: center;
+}
+
+.icone-agendamento-vazio {
+    width: 65px;
+    height: 65px;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f4edf6;
+    border-radius: 50%;
+    color: #713b82;
+    font-size: 35px;
+}
+
+.estado-vazio-agendamentos h2 {
+    margin-bottom: 12px;
+    color: #29232d;
+    font-size: 21px;
+}
+
+.estado-vazio-agendamentos p {
+    margin-bottom: 25px;
+    color: #716b75;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.botao-agendamento-vazio {
+    display: inline-block;
+    padding: 13px 24px;
+    background: #713b82;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+
+.botao-agendamento-vazio:hover {
+    background: #572d65;
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+
+    .pagina-meus-agendamentos .conteudo-meus-agendamentos {
+        padding: 35px 18px 50px;
+    }
+
+    .introducao-agendamentos h1 {
+        font-size: 30px;
+    }
+
+    .cartao-agendamento {
+        padding: 20px;
+    }
+
+    .topo-cartao-agendamento {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .detalhes-agendamento {
+        gap: 30px;
+    }
+
+    .estado-vazio-agendamentos {
+        padding: 35px 20px;
+    }
+
+}
+
+/* Ajustes do cabeçalho - Meus agendamentos */
+
+.pagina-meus-agendamentos .cabecalho-login .marca-login {
+    font-size: 28px;
+    font-weight: 700;
+    color: #713b82;
+    text-decoration: none;
+}
+
+.pagina-meus-agendamentos .cabecalho-login .marca-login span {
+    color: #29232d;
+}
+
+.pagina-meus-agendamentos .nav-agendamentos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.pagina-meus-agendamentos .nav-agendamentos a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    padding: 10px 17px;
+    border-radius: 8px;
+    font-size: 14px;
+    text-decoration: none;
+}
+/* Filtros de agendamentos */
+
+.filtros-agendamentos {
+    width: 100%;
+    max-width: 850px;
+    margin: 0 auto 25px;
+    padding: 22px;
+    display: flex;
+    align-items: flex-end;
+    gap: 15px;
+    flex-wrap: wrap;
+    background: #ffffff;
+    border: 1px solid #f0eaf2;
+    border-radius: 14px;
+}
+
+.campo-filtro {
+    flex: 1;
+    min-width: 150px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.campo-filtro label {
+    color: #514b55;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.campo-filtro input,
+.campo-filtro select {
+    width: 100%;
+    height: 42px;
+    padding: 8px 10px;
+    border: 1px solid #d8d1dc;
+    border-radius: 7px;
+    background: #ffffff;
+    color: #29232d;
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+}
+
+.campo-filtro input:focus,
+.campo-filtro select:focus {
+    outline: none;
+    border-color: #713b82;
+    box-shadow: 0 0 0 3px rgba(113, 59, 130, 0.10);
+}
+
+#limpar-filtros {
+    min-height: 42px;
+    padding: 0 16px;
+    border: 1px solid #713b82;
+    border-radius: 7px;
+    background: #ffffff;
+    color: #713b82;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+#limpar-filtros:hover {
+    background: #f4edf6;
+}
+
+.cartao-agendamento[hidden] {
+    display: none;
+}
+
+.mensagem-sem-resultados {
+    max-width: 850px;
+    margin: 20px auto;
+    color: #716b75;
+    text-align: center;
+    font-size: 14px;
+}
+
+@media (max-width: 600px) {
+    .filtros-agendamentos {
+        padding: 18px;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .campo-filtro {
+        width: 100%;
+    }
+
+    #limpar-filtros {
+        width: 100%;
+    }
+
+    .pagina-meus-agendamentos .nav-agendamentos {
+        gap: 7px;
+    }
+}
+
+/* ========================================
+   PAINEL ADMINISTRATIVO
+======================================== */
+
+.pagina-painel-admin {
+    background: #f8f6f9;
+}
+
+/* Conteúdo principal */
+.pagina-painel-admin .conteudo-painel-admin {
+    min-height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 55px 25px 75px;
+}
+
+/* Cabeçalho da página */
+.introducao-painel-admin {
+    width: 100%;
+    max-width: 950px;
+    margin: 0 auto 50px;
+    text-align: center;
+}
+
+.introducao-painel-admin h1 {
+    margin: 12px 0;
+    color: #29232d;
+    font-size: 38px;
+}
+
+.introducao-painel-admin p {
+    color: #716b75;
+    line-height: 1.6;
+}
+
+/* Seção de gestão */
+.secao-gestao-admin {
+    width: 100%;
+    max-width: 1050px;
+    margin: 0 auto;
+}
+
+.titulo-gestao-admin {
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.titulo-gestao-admin h2 {
+    margin-bottom: 8px;
+    color: #29232d;
+    font-size: 23px;
+}
+
+.titulo-gestao-admin p {
+    color: #716b75;
+    font-size: 14px;
+}
+
+/* Cartões */
+.cartoes-gestao-admin {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.cartao-gestao-admin {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 0;
+    padding: 28px 25px;
+    background: #ffffff;
+    border: 1px solid #f0eaf2;
+    border-radius: 16px;
+    box-shadow: 0 5px 20px rgba(55, 35, 60, 0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.cartao-gestao-admin:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 9px 25px rgba(55, 35, 60, 0.09);
+}
+
+.numero-gestao-admin {
+    position: absolute;
+    top: 20px;
+    right: 22px;
+    color: #c9b9ce;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.icone-gestao-admin {
+    width: 54px;
+    height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 22px;
+    background: #f4edf6;
+    border-radius: 13px;
+    color: #713b82;
+    font-size: 29px;
+}
+
+.cartao-gestao-admin h3 {
+    margin-bottom: 12px;
+    color: #29232d;
+    font-size: 19px;
+}
+
+.cartao-gestao-admin p {
+    min-height: 65px;
+    margin-bottom: 25px;
+    color: #716b75;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* Botões */
+.botao-gestao-admin {
+    width: 100%;
+    min-height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: auto;
+    padding: 11px 15px;
+    background: #713b82;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+
+.botao-gestao-admin:hover {
+    background: #572d65;
+}
+
+/* Responsividade */
+@media (max-width: 850px) {
+    .cartoes-gestao-admin {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+    .pagina-painel-admin .conteudo-painel-admin {
+        padding: 35px 18px 50px;
+    }
+
+    .introducao-painel-admin {
+        margin-bottom: 35px;
+    }
+
+    .introducao-painel-admin h1 {
+        font-size: 30px;
+    }
+
+    .cartoes-gestao-admin {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .cartao-gestao-admin {
+        padding: 25px 22px;
+    }
+
+    .cartao-gestao-admin p {
+        min-height: auto;
+    }
+}
+/* Correção da marca - Painel Administrativo */
+
+.pagina-painel-admin .cabecalho-login .marca-login {
+    font-size: 28px !important;
+    font-weight: 700;
+    color: #713b82 !important;
+    text-decoration: none;
+}
+
+.pagina-painel-admin .cabecalho-login .marca-login span {
+    color: #29232d !important;
+}
+
+
+/* =========================================
+   AGENDAMENTOS - PAINEL ADMINISTRATIVO
+========================================= */
+
+.pagina-agendamentos-admin {
+    background: #f8f6f9;
+    color: #29232d;
+    min-height: 100vh;
+}
+
+/* Cabeçalho */
+
+.pagina-agendamentos-admin .cabecalho-login {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 22px 6%;
+    background: #ffffff;
+    box-shadow: 0 2px 12px rgba(41, 35, 45, 0.06);
+}
+
+.pagina-agendamentos-admin .marca-login {
+    font-size: 28px !important;
+    font-weight: 700;
+    color: #713b82 !important;
+    text-decoration: none;
+}
+
+.pagina-agendamentos-admin .marca-login span {
+    color: #29232d !important;
+}
+
+.pagina-agendamentos-admin .nav-agendamentos {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.pagina-agendamentos-admin .nav-agendamentos a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    padding: 9px 17px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.2s ease;
+}
+
+.pagina-agendamentos-admin .botao-voltar-agendamentos {
+    color: #713b82;
+    border: 1px solid #713b82;
+    background: #ffffff;
+}
+
+.pagina-agendamentos-admin .botao-voltar-agendamentos:hover {
+    background: #f3edf5;
+}
+
+.pagina-agendamentos-admin .botao-sair {
+    color: #ffffff;
+    background: #713b82;
+}
+
+.pagina-agendamentos-admin .botao-sair:hover {
+    background: #572d65;
+}
+
+/* Conteúdo principal */
+
+.pagina-agendamentos-admin .conteudo-agendamentos-admin {
+    width: 94%;
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 48px 0 55px;
+}
+
+.pagina-agendamentos-admin .introducao-agendamentos {
+    margin-bottom: 30px;
+}
+
+.pagina-agendamentos-admin .subtitulo-admin {
+    color: #713b82;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.pagina-agendamentos-admin .introducao-agendamentos h1 {
+    margin: 10px 0;
+    font-size: 34px;
+    color: #29232d;
+}
+
+.pagina-agendamentos-admin .introducao-agendamentos p {
+    color: #716a75;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+/* Mensagens */
+
+.pagina-agendamentos-admin .mensagens {
+    margin-bottom: 22px;
+}
+
+.pagina-agendamentos-admin .alerta {
+    padding: 13px 16px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+/* Filtros */
+
+.pagina-agendamentos-admin .filtros-admin {
+    display: flex;
+    align-items: end;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 22px;
+    margin-bottom: 22px;
+    background: #ffffff;
+    border: 1px solid #eee8f0;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(41, 35, 45, 0.04);
+}
+
+.pagina-agendamentos-admin .campo-filtro-admin {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 180px;
+    gap: 7px;
+}
+
+.pagina-agendamentos-admin .campo-filtro-admin label,
+.pagina-agendamentos-admin .form-status-admin label {
+    color: #514957;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.pagina-agendamentos-admin .campo-filtro-admin input,
+.pagina-agendamentos-admin .campo-filtro-admin select {
+    width: 100%;
+    min-height: 42px;
+    padding: 10px 12px;
+    border: 1px solid #ded7e1;
+    border-radius: 7px;
+    background: #ffffff;
+    color: #29232d;
+    font-size: 14px;
+    outline: none;
+}
+
+.pagina-agendamentos-admin .campo-filtro-admin input:focus,
+.pagina-agendamentos-admin .campo-filtro-admin select:focus {
+    border-color: #713b82;
+    box-shadow: 0 0 0 3px rgba(113, 59, 130, 0.10);
+}
+
+.pagina-agendamentos-admin #limpar-filtros-admin {
+    min-height: 42px;
+    padding: 10px 17px;
+    border: 1px solid #713b82;
+    border-radius: 7px;
+    background: #ffffff;
+    color: #713b82;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.pagina-agendamentos-admin #limpar-filtros-admin:hover {
+    background: #f3edf5;
+}
+
+/* Tabela */
+
+.pagina-agendamentos-admin .tabela-responsiva {
+    width: 100%;
+    overflow-x: auto;
+    background: #ffffff;
+    border: 1px solid #eee8f0;
+    border-radius: 12px;
+    box-shadow: 0 3px 14px rgba(41, 35, 45, 0.05);
+}
+
+.pagina-agendamentos-admin .tabela-agendamentos {
+    width: 100%;
+    min-width: 1500px;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.pagina-agendamentos-admin .tabela-agendamentos th {
+    padding: 16px 13px;
+    background: #713b82;
+    color: #ffffff;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.pagina-agendamentos-admin .tabela-agendamentos td {
+    padding: 15px 13px;
+    border-bottom: 1px solid #eee8f0;
+    color: #514957;
+    vertical-align: top;
+    line-height: 1.5;
+}
+
+.pagina-agendamentos-admin .tabela-agendamentos tbody tr:hover {
+    background: #fcf9fd;
+}
+
+.pagina-agendamentos-admin .tabela-agendamentos tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.pagina-agendamentos-admin .tabela-agendamentos td p {
+    margin-top: 6px;
+    font-size: 12px;
+    color: #716a75;
+}
+
+/* Status */
+
+.pagina-agendamentos-admin .status {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.pagina-agendamentos-admin .status-pendente {
+    background: #fff3d6;
+    color: #936500;
+}
+
+.pagina-agendamentos-admin .status-confirmado {
+    background: #e1f4e8;
+    color: #267344;
+}
+
+.pagina-agendamentos-admin .status-cancelado {
+    background: #fde5e5;
+    color: #a83333;
+}
+
+.pagina-agendamentos-admin .status-concluido {
+    background: #eee3f3;
+    color: #713b82;
+}
+
+.pagina-agendamentos-admin .status-faltou {
+    background: #ecebed;
+    color: #625d65;
+}
+
+/* Formulário de gerenciamento */
+
+.pagina-agendamentos-admin .form-status-admin {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    min-width: 190px;
+}
+
+.pagina-agendamentos-admin .form-status-admin select,
+.pagina-agendamentos-admin .form-status-admin input,
+.pagina-agendamentos-admin .form-status-admin textarea {
+    width: 100%;
+    padding: 9px 10px;
+    border: 1px solid #ded7e1;
+    border-radius: 7px;
+    background: #ffffff;
+    color: #29232d;
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    outline: none;
+}
+
+.pagina-agendamentos-admin .form-status-admin select:focus,
+.pagina-agendamentos-admin .form-status-admin input:focus,
+.pagina-agendamentos-admin .form-status-admin textarea:focus {
+    border-color: #713b82;
+    box-shadow: 0 0 0 3px rgba(113, 59, 130, 0.10);
+}
+
+.pagina-agendamentos-admin .form-status-admin textarea {
+    min-height: 65px;
+    resize: vertical;
+}
+
+.pagina-agendamentos-admin .campos-atendimento-admin {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.pagina-agendamentos-admin .botao-atualizar-admin {
+    min-height: 38px;
+    padding: 9px 14px;
+    border: none;
+    border-radius: 7px;
+    background: #713b82;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.pagina-agendamentos-admin .botao-atualizar-admin:hover {
+    background: #572d65;
+}
+
+/* Resultados e estado vazio */
+
+.pagina-agendamentos-admin .mensagem-sem-resultados-admin,
+.pagina-agendamentos-admin .estado-vazio-admin {
+    padding: 35px 22px;
+    margin-top: 20px;
+    background: #ffffff;
+    border: 1px solid #eee8f0;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.pagina-agendamentos-admin .estado-vazio-admin h2 {
+    margin-bottom: 10px;
+    color: #29232d;
+    font-size: 21px;
+}
+
+.pagina-agendamentos-admin .estado-vazio-admin p,
+.pagina-agendamentos-admin .mensagem-sem-resultados-admin {
+    color: #716a75;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.pagina-agendamentos-admin .link-voltar-admin {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    min-width: 250px;
+    min-height: 45px;
+    margin: 25px auto 10px;
+    padding: 12px 20px;
+    background: #713b82;
+    color: #ffffff;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.pagina-agendamentos-admin .link-voltar-admin:hover {
+    background: #572d65;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+/* Responsividade */
+
+@media (max-width: 700px) {
+    .pagina-agendamentos-admin .cabecalho-login {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 18px 5%;
+    }
+
+    .pagina-agendamentos-admin .nav-agendamentos {
+        width: 100%;
+    }
+
+    .pagina-agendamentos-admin .nav-agendamentos a {
+        flex: 1;
+    }
+
+    .pagina-agendamentos-admin .conteudo-agendamentos-admin {
+        width: 92%;
+        padding-top: 32px;
+    }
+
+    .pagina-agendamentos-admin .introducao-agendamentos h1 {
+        font-size: 28px;
+    }
+
+    .pagina-agendamentos-admin .filtros-admin {
+        padding: 16px;
+    }
+
+    .pagina-agendamentos-admin #limpar-filtros-admin {
+        width: 100%;
+    }
+}
+
+
+/* Ajustes de espaçamento da tabela de agendamentos */
+.pagina-agendamentos-admin .tabela-agendamentos th,
+.pagina-agendamentos-admin .tabela-agendamentos td {
+    padding: 10px 12px;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.pagina-agendamentos-admin .tabela-agendamentos tbody tr {
+    height: auto;
+}
+
+/* Organização da coluna Gerenciar */
+.pagina-agendamentos-admin .tabela-agendamentos td:last-child {
+    min-width: 230px;
+    white-space: normal;
+}
+
+.pagina-agendamentos-admin .tabela-agendamentos td:last-child form {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    min-width: 210px;
+}
+
+.pagina-agendamentos-admin .tabela-agendamentos td:last-child select,
+.pagina-agendamentos-admin .tabela-agendamentos td:last-child input,
+.pagina-agendamentos-admin .tabela-agendamentos td:last-child textarea {
+    width: 100%;
+    margin: 0;
+}
+
+.pagina-agendamentos-admin .tabela-agendamentos td:last-child textarea {
+    min-height: 55px;
+    resize: vertical;
+}
+
+.pagina-agendamentos-admin .tabela-agendamentos td:last-child button {
+    width: 100%;
+    margin: 0;
+}
+
+
+/* =========================================
+   TABELA ADMINISTRATIVA - AJUSTE DE LARGURA
+========================================= */
+
+.pagina-agendamentos-admin .tabela-responsiva {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.pagina-agendamentos-admin .tabela-agendamentos {
+    width: 100%;
+    min-width: 1250px;
+    table-layout: auto;
+    border-collapse: collapse;
+}
+
+/* Espaçamento e leitura */
+.pagina-agendamentos-admin .tabela-agendamentos th,
+.pagina-agendamentos-admin .tabela-agendamentos td {
+    padding: 10px 9px;
+    font-size: 12px;
+    vertical-align: middle;
+    white-space: normal;
+    overflow-wrap: break-word;
+}
+
+/* Colunas que precisam de mais espaço */
+.pagina-agendamentos-admin .tabela-agendamentos th:nth-child(1),
+.pagina-agendamentos-admin .tabela-agendamentos td:nth-child(1) {
+    min-width: 115px;
+}
+
+.pagina-agendamentos-admin .tabela-agendamentos th:nth-child(2),
+.pagina-agendamentos-admin .tabela-agendamentos td:nth-child(2) {
+    min-width: 115px;
+}
+
+.pagina-agendamentos-admin .tabela-agendamentos th:nth-child(3),
+.pagina-agendamentos-admin .tabela-agendamentos td:nth-child(3) {
+    min-width: 115px;
+}
+
+.pagina-agendamentos-admin .tabela-agendamentos th:nth-child(10),
+.pagina-agendamentos-admin .tabela-agendamentos td:nth-child(10) {
+    min-width: 145px;
+}
+
+.pagina-agendamentos-admin .tabela-agendamentos th:nth-child(11),
+.pagina-agendamentos-admin .tabela-agendamentos td:nth-child(11) {
+    min-width: 150px;
+}
+
+/* Coluna Gerenciar */
+.pagina-agendamentos-admin .tabela-agendamentos th:nth-child(12),
+.pagina-agendamentos-admin .tabela-agendamentos td:nth-child(12) {
+    min-width: 190px;
+}
+
+.pagina-agendamentos-admin .form-status-admin {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    width: 100%;
+    min-width: 0;
+}
+
+.pagina-agendamentos-admin .form-status-admin label {
+    font-size: 11px;
+}
+
+.pagina-agendamentos-admin .form-status-admin select,
+.pagina-agendamentos-admin .form-status-admin input,
+.pagina-agendamentos-admin .form-status-admin textarea {
+    width: 100%;
+    min-width: 0;
+    padding: 7px;
+    font-size: 12px;
+}
+
+.pagina-agendamentos-admin .form-status-admin textarea {
+    min-height: 50px;
+}
+
+.pagina-agendamentos-admin .form-status-admin .botao-atualizar-admin {
+    width: 100%;
+    padding: 9px;
+}
+
+/* Reduz espaços internos das informações */
+.pagina-agendamentos-admin .tabela-agendamentos td p {
+    margin: 4px 0;
+    font-size: 11px;
+}
+
+/* =========================================
+   GERENCIAR SERVIÇOS - PAINEL ADMINISTRATIVO
+========================================= */
+
+.pagina-servicos-admin {
+    min-height: 100vh;
+    background: #f8f6f9;
+    color: #29232d;
+}
+
+.pagina-servicos-admin .cabecalho-login {
+    padding: 22px 6%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffffff;
+    box-shadow: 0 2px 12px rgba(41, 35, 45, 0.06);
+}
+
+.pagina-servicos-admin .cabecalho-login .marca-login {
+    font-size: 28px !important;
+    font-weight: 700;
+    color: #713b82 !important;
+    text-decoration: none;
+}
+
+.pagina-servicos-admin .cabecalho-login .marca-login span {
+    color: #29232d !important;
+}
+
+.pagina-servicos-admin .cabecalho-login nav {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.pagina-servicos-admin .botao-voltar-servicos,
+.pagina-servicos-admin .botao-sair {
+    padding: 10px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.pagina-servicos-admin .botao-voltar-servicos {
+    background: #f1eaf3;
+    color: #713b82;
+}
+
+.pagina-servicos-admin .botao-voltar-servicos:hover {
+    background: #e8ddec;
+}
+
+.pagina-servicos-admin .botao-sair {
+    background: #713b82;
+    color: #ffffff;
+}
+
+.pagina-servicos-admin .botao-sair:hover {
+    background: #572d65;
+}
+
+.conteudo-servicos-admin {
+    width: 90%;
+    max-width: 1200px;
+    margin: 45px auto;
+}
+
+.introducao-servicos {
+    margin-bottom: 30px;
+}
+
+.etiqueta-servicos,
+.subtitulo-servicos {
+    display: block;
+    color: #8b6397;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    margin-bottom: 9px;
+}
+
+.introducao-servicos h1 {
+    font-size: 30px;
+    color: #29232d;
+    margin-bottom: 8px;
+}
+
+.introducao-servicos p {
+    color: #766d79;
+    font-size: 15px;
+}
+
+.pagina-servicos-admin .cartao-cadastro-servico {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 14px;
+    box-shadow: 0 4px 18px rgba(41, 35, 45, 0.06);
+    margin-bottom: 45px;
+}
+
+.titulo-secao-servicos h2,
+.titulo-lista-servicos h2 {
+    font-size: 21px;
+    color: #29232d;
+    margin-bottom: 22px;
+}
+
+.formulario-servico {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.campo-servico {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.campo-servico label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #49404d;
+}
+
+.campo-servico input,
+.campo-servico select,
+.campo-servico textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #ded6e1;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #29232d;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: 0.2s;
+}
+
+.campo-servico input:focus,
+.campo-servico select:focus,
+.campo-servico textarea:focus {
+    border-color: #713b82;
+    box-shadow: 0 0 0 3px rgba(113, 59, 130, 0.10);
+}
+
+.campo-servico textarea {
+    resize: vertical;
+    min-height: 85px;
+}
+
+.campo-servico-completo {
+    grid-column: 1 / -1;
+}
+
+.botao-cadastrar-servico {
+    padding: 13px 22px;
+    border: none;
+    border-radius: 8px;
+    background: #713b82;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.botao-cadastrar-servico:hover {
+    background: #572d65;
+}
+
+.titulo-lista-servicos {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+}
+
+.contador-servicos {
+    background: #eee6f1;
+    color: #713b82;
+    padding: 8px 13px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.grade-servicos {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.card-servico-admin {
+    background: #ffffff;
+    border: 1px solid #eee8f0;
+    border-radius: 13px;
+    padding: 23px;
+    box-shadow: 0 3px 12px rgba(41, 35, 45, 0.04);
+    transition: 0.2s;
+}
+
+.card-servico-admin:hover {
+    box-shadow: 0 6px 18px rgba(41, 35, 45, 0.08);
+    transform: translateY(-2px);
+}
+
+.topo-card-servico {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.topo-card-servico h3 {
+    color: #392d3e;
+    font-size: 18px;
+    margin-bottom: 6px;
+}
+
+.comprimento-servico {
+    color: #827687;
+    font-size: 13px;
+}
+
+.status-servico {
+    padding: 6px 11px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.status-servico-ativo {
+    background: #e5f4e9;
+    color: #287443;
+}
+
+.status-servico-inativo {
+    background: #fbe9e9;
+    color: #a43e3e;
+}
+
+.descricao-servico {
+    color: #766d79;
+    font-size: 14px;
+    line-height: 1.5;
+    min-height: 42px;
+    margin-bottom: 20px;
+}
+
+.informacoes-servico {
+    display: flex;
+    gap: 45px;
+    padding: 15px 0;
+    border-top: 1px solid #eee8f0;
+    border-bottom: 1px solid #eee8f0;
+    margin-bottom: 18px;
+}
+
+.informacoes-servico div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.informacoes-servico span {
+    color: #827687;
+    font-size: 12px;
+}
+
+.informacoes-servico strong {
+    color: #713b82;
+    font-size: 16px;
+}
+
+.acoes-servico {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.botao-editar-servico,
+.botao-status-servico {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 39px;
+    padding: 9px 13px;
+    border-radius: 7px;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.botao-editar-servico {
+    background: #f1eaf3;
+    color: #713b82;
+    flex: 1;
+}
+
+.botao-editar-servico:hover {
+    background: #e8ddec;
+}
+
+.form-status-servico {
+    margin: 0;
+}
+
+.botao-status-servico {
+    border: none;
+}
+
+.botao-desativar-servico {
+    background: #fbe9e9;
+    color: #a43e3e;
+}
+
+.botao-desativar-servico:hover {
+    background: #f5dada;
+}
+
+.botao-ativar-servico {
+    background: #e5f4e9;
+    color: #287443;
+}
+
+.botao-ativar-servico:hover {
+    background: #d2ead9;
+}
+
+.mensagem-vazia-servicos {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 35px;
+    text-align: center;
+    color: #766d79;
+}
+
+.mensagem-vazia-servicos h3 {
+    color: #392d3e;
+    margin-bottom: 8px;
+}
+
+/* Responsividade */
+
+@media (max-width: 700px) {
+    .pagina-servicos-admin .cabecalho-login {
+        padding: 18px 5%;
+    }
+
+    .pagina-servicos-admin .cabecalho-login .marca-login {
+        font-size: 22px !important;
+    }
+
+    .pagina-servicos-admin .botao-voltar-servicos,
+    .pagina-servicos-admin .botao-sair {
+        padding: 9px 11px;
+        font-size: 12px;
+    }
+
+    .conteudo-servicos-admin {
+        width: 92%;
+        margin: 30px auto;
+    }
+
+    .introducao-servicos h1 {
+        font-size: 25px;
+    }
+
+    .pagina-servicos-admin .cartao-cadastro-servico {
+        padding: 22px 18px;
+    }
+
+    .formulario-servico,
+    .grade-servicos {
+        grid-template-columns: 1fr;
+    }
+
+    .campo-servico-completo {
+        grid-column: auto;
+    }
+
+    .titulo-lista-servicos {
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .card-servico-admin {
+        padding: 19px;
+    }
+
+    .acoes-servico {
+        flex-wrap: wrap;
+    }
+}
+
+/* Alinhamento dos botões do catálogo de serviços */
+.pagina-servicos-admin .acoes-servico {
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
+    width: 100%;
+    margin-top: 15px;
+}
+
+.pagina-servicos-admin .acoes-servico .botao-editar-servico,
+.pagina-servicos-admin .acoes-servico .botao-status-servico {
+    flex: 1;
+    width: 100%;
+    min-height: 40px;
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.pagina-servicos-admin .form-status-servico {
+    flex: 1;
+    display: flex;
+    margin: 0;
+}
+
+.pagina-servicos-admin .form-status-servico button {
+    margin: 0;
+}
+
+/* ========================================
+   PÁGINA EDITAR SERVIÇO
+======================================== */
+
+.pagina-editar-servico {
+    min-height: 100vh;
+    background: #f8f6f9;
+    color: #29232d;
+}
+
+.pagina-editar-servico .cabecalho-login {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 6%;
+    background: #ffffff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.pagina-editar-servico .cabecalho-login .marca-login {
+    font-size: 28px !important;
+    font-weight: 700;
+    color: #713b82 !important;
+    text-decoration: none;
+}
+
+.pagina-editar-servico .cabecalho-login .marca-login span {
+    color: #29232d !important;
+}
+
+.pagina-editar-servico .cabecalho-login nav {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.pagina-editar-servico .botao-voltar-edicao,
+.pagina-editar-servico .botao-sair {
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.pagina-editar-servico .botao-voltar-edicao {
+    color: #713b82;
+    background: #f1eaf4;
+}
+
+.pagina-editar-servico .botao-sair {
+    color: #ffffff;
+    background: #713b82;
+}
+
+.pagina-editar-servico .botao-voltar-edicao:hover {
+    background: #e8dced;
+}
+
+.pagina-editar-servico .botao-sair:hover {
+    background: #572d65;
+}
+
+.pagina-editar-servico .conteudo-editar-servico {
+    width: 90%;
+    max-width: 760px;
+    margin: 45px auto;
+}
+
+.pagina-editar-servico .introducao-editar-servico {
+    margin-bottom: 25px;
+}
+
+.pagina-editar-servico .etiqueta-editar-servico {
+    color: #713b82;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+.pagina-editar-servico .introducao-editar-servico h2 {
+    margin: 8px 0;
+    font-size: 30px;
+    color: #29232d;
+}
+
+.pagina-editar-servico .introducao-editar-servico p {
+    color: #756d79;
+    font-size: 15px;
+}
+
+.pagina-editar-servico .cartao-editar-servico {
+    background: #ffffff;
+    padding: 32px;
+    border-radius: 14px;
+    box-shadow: 0 5px 20px rgba(45, 25, 55, 0.06);
+    border: 1px solid #eee8f0;
+}
+
+.pagina-editar-servico .titulo-cartao-edicao {
+    margin-bottom: 25px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid #eee8f0;
+}
+
+.pagina-editar-servico .titulo-cartao-edicao h3 {
+    font-size: 19px;
+    margin-bottom: 6px;
+}
+
+.pagina-editar-servico .titulo-cartao-edicao p {
+    color: #827987;
+    font-size: 13px;
+}
+
+.pagina-editar-servico .formulario-editar-servico {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.pagina-editar-servico .campo-edicao {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+    min-width: 0;
+}
+
+.pagina-editar-servico .campo-edicao label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #403646;
+}
+
+.pagina-editar-servico .campo-edicao input,
+.pagina-editar-servico .campo-edicao select,
+.pagina-editar-servico .campo-edicao textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #ded5e2;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #29232d;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    box-sizing: border-box;
+    outline: none;
+}
+
+.pagina-editar-servico .campo-edicao input:focus,
+.pagina-editar-servico .campo-edicao select:focus,
+.pagina-editar-servico .campo-edicao textarea:focus {
+    border-color: #713b82;
+    box-shadow: 0 0 0 3px rgba(113, 59, 130, 0.10);
+}
+
+.pagina-editar-servico .campo-edicao textarea {
+    resize: vertical;
+    min-height: 90px;
+}
+
+.pagina-editar-servico .linha-campos-edicao {
+    display: flex;
+    gap: 18px;
+}
+
+.pagina-editar-servico .acoes-editar-servico {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.pagina-editar-servico .acoes-editar-servico a,
+.pagina-editar-servico .acoes-editar-servico button {
+    min-height: 42px;
+    padding: 11px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.pagina-editar-servico .acoes-editar-servico a {
+    color: #713b82;
+    background: #f1eaf4;
+    border: 1px solid #e6dbea;
+}
+
+.pagina-editar-servico .acoes-editar-servico button {
+    color: #ffffff;
+    background: #713b82;
+    border: 1px solid #713b82;
+}
+
+.pagina-editar-servico .acoes-editar-servico button:hover {
+    background: #572d65;
+}
+
+.pagina-editar-servico .acoes-editar-servico a:hover {
+    background: #e8dced;
+}
+
+@media (max-width: 600px) {
+    .pagina-editar-servico .cabecalho-login {
+        padding: 18px 5%;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .pagina-editar-servico .cabecalho-login .marca-login {
+        font-size: 23px !important;
+    }
+
+    .pagina-editar-servico .conteudo-editar-servico {
+        margin: 30px auto;
+    }
+
+    .pagina-editar-servico .cartao-editar-servico {
+        padding: 22px 18px;
+    }
+
+    .pagina-editar-servico .linha-campos-edicao {
+        flex-direction: column;
+    }
+
+    .pagina-editar-servico .acoes-editar-servico {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .pagina-editar-servico .acoes-editar-servico a,
+    .pagina-editar-servico .acoes-editar-servico button {
+        width: 100%;
+        text-align: center;
+    }
+}
+.pagina-editar-servico .acoes-editar-servico a,
+.pagina-editar-servico .acoes-editar-servico button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 42px;
+    line-height: 1;
+    margin: 0;
+}
+
+
+/* =========================================
+   CONFIGURAR HORÁRIOS
+========================================= */
+
+.pagina-configurar-horarios {
+    background: #f8f6f9;
+    color: #29232d;
+    min-height: 100vh;
+}
+
+.pagina-configurar-horarios .cabecalho-login {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 7%;
+    background: #ffffff;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+}
+
+.pagina-configurar-horarios .marca-login {
+    color: #713b82 !important;
+    font-size: 28px !important;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.pagina-configurar-horarios .marca-login span {
+    color: #29232d !important;
+}
+
+.pagina-configurar-horarios .cabecalho-login nav {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.pagina-configurar-horarios .cabecalho-login nav a {
+    color: #713b82;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s;
+}
+
+.pagina-configurar-horarios .cabecalho-login nav a:hover {
+    color: #572d65;
+}
+
+.pagina-configurar-horarios .introducao-horarios {
+    max-width: 1100px;
+    margin: 45px auto 28px;
+    padding: 0 24px;
+}
+
+.pagina-configurar-horarios .etiqueta-horarios {
+    color: #713b82;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+.pagina-configurar-horarios .introducao-horarios h2 {
+    font-size: 30px;
+    margin-bottom: 10px;
+    color: #29232d;
+}
+
+.pagina-configurar-horarios .introducao-horarios p {
+    color: #756d78;
+    font-size: 15px;
+}
+
+.pagina-configurar-horarios main {
+    max-width: 1100px;
+    margin: 0 auto 60px;
+    padding: 0 24px;
+}
+
+
+.pagina-configurar-horarios .horarios-vazios {
+    padding: 35px;
+    background: #ffffff;
+    border-radius: 12px;
+    color: #756d78;
+    text-align: center;
+}
+
+.pagina-configurar-horarios .mensagem {
+    margin: 15px 0;
+}
+
+@media (max-width: 650px) {
+    .pagina-configurar-horarios .cabecalho-login {
+        flex-direction: column;
+        gap: 15px;
+        padding: 18px;
+    }
+
+    .pagina-configurar-horarios .campos-horario {
+        grid-template-columns: 1fr;
+    }
+
+    .pagina-configurar-horarios .rodape-horario {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .pagina-configurar-horarios .botao-salvar-horario {
+        width: 100%;
+    }
+
+    .pagina-configurar-horarios .introducao-horarios h2 {
+        font-size: 25px;
+    }
+}
+
+
+/* =========================================
+   HORÁRIOS AGRUPADOS POR DIA
+========================================= */
+
+.pagina-configurar-horarios .conteudo-horarios {
+    width: 90%;
+    max-width: 1100px;
+    margin: 0 auto 50px;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.pagina-configurar-horarios .lista-horarios {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+.pagina-configurar-horarios .cartao-dia-horarios {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    background: #ffffff;
+    border: 1px solid #eee7f0;
+    border-radius: 14px;
+    padding: 22px 24px;
+    box-shadow: 0 4px 15px rgba(45, 25, 50, 0.04);
+}
+
+.pagina-configurar-horarios .cabecalho-dia-horarios {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 15px;
+    margin-bottom: 18px;
+    border-bottom: 1px solid #f0ebf1;
+}
+
+.pagina-configurar-horarios .cabecalho-dia-horarios h3 {
+    margin: 0;
+    color: #392b3e;
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.pagina-configurar-horarios .periodos-dia-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    width: 100%;
+}
+
+.pagina-configurar-horarios .cartao-periodo-horario {
+    min-width: 0;
+    box-sizing: border-box;
+    background: #faf8fb;
+    border: 1px solid #eee7f0;
+    border-radius: 11px;
+    padding: 18px;
+}
+
+.pagina-configurar-horarios .cabecalho-periodo-horario {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.pagina-configurar-horarios .identificacao-periodo {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.pagina-configurar-horarios .identificacao-periodo h4 {
+    margin: 0;
+    color: #514656;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+.pagina-configurar-horarios .icone-periodo {
+    color: #713b82;
+    font-size: 19px;
+}
+
+.pagina-configurar-horarios .estado-horario {
+    white-space: nowrap;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.pagina-configurar-horarios .horario-ativo {
+    background: #e8f5ec;
+    color: #287342;
+}
+
+.pagina-configurar-horarios .horario-inativo {
+    background: #f1edf2;
+    color: #766b79;
+}
+
+.pagina-configurar-horarios .campos-horario {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.pagina-configurar-horarios .campo-horario {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    min-width: 0;
+}
+
+.pagina-configurar-horarios .campo-horario label {
+    color: #514656;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.pagina-configurar-horarios .campo-horario input[type="time"] {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    height: 40px;
+    padding: 0 5px;
+    box-sizing: border-box;
+    border: 1px solid #ded5e2;
+    border-radius: 7px;
+    background: #ffffff;
+    color: #29232d;
+    font-size: 13px;
+    outline: none;
+}
+
+.pagina-configurar-horarios .campo-horario input[type="time"]:focus {
+    border-color: #713b82;
+    box-shadow: 0 0 0 3px rgba(113, 59, 130, 0.10);
+}
+
+.pagina-configurar-horarios .rodape-horario {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-top: 17px;
+    padding-top: 13px;
+    border-top: 1px solid #eee7f0;
+}
+
+.pagina-configurar-horarios .controle-ativo {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: #514656;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.pagina-configurar-horarios .controle-ativo input {
+    width: 16px;
+    height: 16px;
+    accent-color: #713b82;
+    cursor: pointer;
+}
+
+.pagina-configurar-horarios .botao-salvar-horario {
+    min-width: 85px;
+    height: 36px;
+    padding: 0 14px;
+    border: none;
+    border-radius: 7px;
+    background: #713b82;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.pagina-configurar-horarios .botao-salvar-horario:hover {
+    background: #572d65;
+}
+
+@media (max-width: 700px) {
+    .pagina-configurar-horarios .periodos-dia-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 450px) {
+    .pagina-configurar-horarios .cartao-dia-horarios {
+        padding: 16px;
+    }
+
+    .pagina-configurar-horarios .cartao-periodo-horario {
+        padding: 14px;
+    }
+
+    .pagina-configurar-horarios .rodape-horario {
+        flex-wrap: wrap;
+    }
+}
+
+
+/* =========================================
+   AJUSTES FINAIS - CONFIGURAR HORÁRIOS
+========================================= */
+
+/* Centralizar e ampliar os cartões dos dias */
+.pagina-configurar-horarios .conteudo-horarios {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto 50px;
+    padding: 0 24px;
+    box-sizing: border-box;
+}
+
+.pagina-configurar-horarios .lista-horarios {
+    width: 100%;
+    align-items: center;
+}
+
+.pagina-configurar-horarios .cartao-dia-horarios {
+    width: 100%;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Dar mais espaço aos campos de horário */
+.pagina-configurar-horarios .cartao-periodo-horario {
+    padding: 20px;
+}
+
+.pagina-configurar-horarios .campos-horario {
+    gap: 14px;
+}
+
+.pagina-configurar-horarios .campo-horario input[type="time"] {
+    height: 43px;
+    font-size: 14px;
+    padding: 0 8px;
+}
+
+/* Alinhar controle e botão salvar */
+.pagina-configurar-horarios .rodape-horario {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.pagina-configurar-horarios .controle-ativo {
+    white-space: nowrap;
+}
+
+.pagina-configurar-horarios .botao-salvar-horario {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    height: 38px;
+}
+
+/* Ajustes para telas menores */
+@media (max-width: 700px) {
+    .pagina-configurar-horarios .cartao-dia-horarios {
+        max-width: 100%;
+    }
+}
+
+/* =========================================
+   AJUSTE FINAL - TABELA DE AGENDAMENTOS
+========================================= */
+
+.pagina-agendamentos-admin .tabela-responsiva {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.pagina-agendamentos-admin .tabela-agendamentos {
+    width: 100%;
+    min-width: 1650px !important;
+    table-layout: auto;
+    border-collapse: collapse;
+}
+
+/* Cabeçalho e informações */
+.pagina-agendamentos-admin .tabela-agendamentos th,
+.pagina-agendamentos-admin .tabela-agendamentos td {
+    padding: 13px 12px;
+    font-size: 13px;
+    line-height: 1.5;
+    vertical-align: middle;
+    white-space: normal;
+    overflow-wrap: break-word;
+}
+
+/* Largura mínima para cada informação */
+.pagina-agendamentos-admin .tabela-agendamentos th:nth-child(1),
+.pagina-agendamentos-admin .tabela-agendamentos td:nth-child(1) {
+    min-width: 125px;
+}
+
+.pagina-agendamentos-admin .tabela-agendamentos th:nth-child(2),
+.pagina-agendamentos-admin .tabela-agendamentos td:nth-child(2) {
+    min-width: 125px;
+}
+
+.pagina-agendamentos-admin .tabela-agendamentos th:nth-child(3),
+.pagina-agendamentos-admin .tabela-agendamentos td:nth-child(3) {
+    min-width: 135px;
+}
+
+.pagina-agendamentos-admin .tabela-agendamentos th:nth-child(4),
+.pagina-agendamentos-admin .tabela-agendamentos td:nth-child(4) {
+    min-width: 105px;
+}
+
+.pagina-agendamentos-admin .tabela-agendamentos th:nth-child(5),
+.pagina-agendamentos-admin .tabela-agendamentos td:nth-child(5) {
+    min-width: 95px;
+}
+
+.pagina-agendamentos-admin .tabela-agendamentos th:nth-child(6),
+.pagina-agendamentos-admin .tabela-agendamentos td:nth-child(6) {
+    min-width: 90px;
+}
+
+.pagina-agendamentos-admin .tabela-agendamentos th:nth-child(7),
+.pagina-agendamentos-admin .tabela-agendamentos td:nth-child(7) {
+    min-width: 105px;
+}
+
+.pagina-agendamentos-admin .tabela-agendamentos th:nth-child(8),
+.pagina-agendamentos-admin .tabela-agendamentos td:nth-child(8) {
+    min-width: 85px;
+}
+
+.pagina-agendamentos-admin .tabela-agendamentos th:nth-child(9),
+.pagina-agendamentos-admin .tabela-agendamentos td:nth-child(9) {
+    min-width: 110px;
+}
+
+.pagina-agendamentos-admin .tabela-agendamentos th:nth-child(10),
+.pagina-agendamentos-admin .tabela-agendamentos td:nth-child(10) {
+    min-width: 180px;
+}
+
+.pagina-agendamentos-admin .tabela-agendamentos th:nth-child(11),
+.pagina-agendamentos-admin .tabela-agendamentos td:nth-child(11) {
+    min-width: 180px;
+}
+
+.pagina-agendamentos-admin .tabela-agendamentos th:nth-child(12),
+.pagina-agendamentos-admin .tabela-agendamentos td:nth-child(12) {
+    min-width: 260px;
+}
+
+/* Linhas mais organizadas */
+.pagina-agendamentos-admin .tabela-agendamentos tbody tr {
+    height: auto;
+}
+
+.pagina-agendamentos-admin .tabela-agendamentos tbody td {
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+
+/* Gerenciar */
+.pagina-agendamentos-admin .form-status-admin {
+    width: 100%;
+    min-width: 0;
+    gap: 8px;
+}
+
+.pagina-agendamentos-admin .form-status-admin label {
+    font-size: 12px;
+}
+
+.pagina-agendamentos-admin .form-status-admin select,
+.pagina-agendamentos-admin .form-status-admin input,
+.pagina-agendamentos-admin .form-status-admin textarea {
+    width: 100%;
+    min-width: 0;
+    padding: 9px 10px;
+    font-size: 12px;
+}
+
+.pagina-agendamentos-admin .form-status-admin .botao-atualizar-admin {
+    width: 100%;
+    min-height: 40px;
+}
+
+/* AJUSTE FINAL - TABELA DE AGENDAMENTOS DO ADMINISTRADOR */
+
+.pagina-agendamentos-admin .tabela-responsiva {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: visible !important;
+}
+
+.pagina-agendamentos-admin .tabela-agendamentos {
+    width: 100% !important;
+    min-width: 0 !important;
+    table-layout: fixed !important;
+    border-collapse: collapse;
+}
+
+/* Largura de cada coluna */
+.pagina-agendamentos-admin .tabela-agendamentos th:nth-child(1)  { width: 8%; }
+.pagina-agendamentos-admin .tabela-agendamentos th:nth-child(2)  { width: 8%; }
+.pagina-agendamentos-admin .tabela-agendamentos th:nth-child(3)  { width: 8%; }
+.pagina-agendamentos-admin .tabela-agendamentos th:nth-child(4)  { width: 6%; }
+.pagina-agendamentos-admin .tabela-agendamentos th:nth-child(5)  { width: 5%; }
+.pagina-agendamentos-admin .tabela-agendamentos th:nth-child(6)  { width: 5%; }
+.pagina-agendamentos-admin .tabela-agendamentos th:nth-child(7)  { width: 7%; }
+.pagina-agendamentos-admin .tabela-agendamentos th:nth-child(8)  { width: 5%; }
+.pagina-agendamentos-admin .tabela-agendamentos th:nth-child(9)  { width: 6%; }
+.pagina-agendamentos-admin .tabela-agendamentos th:nth-child(10) { width: 10%; }
+.pagina-agendamentos-admin .tabela-agendamentos th:nth-child(11) { width: 12%; }
+.pagina-agendamentos-admin .tabela-agendamentos th:nth-child(12) { width: 20%; }
+
+/* Compactação das células e correção da altura */
+.pagina-agendamentos-admin .tabela-agendamentos th,
+.pagina-agendamentos-admin .tabela-agendamentos td {
+    padding: 10px 6px !important;
+    font-size: 11px;
+    line-height: 1.35;
+    white-space: normal !important;
+    overflow-wrap: break-word;
+    word-break: normal;
+    vertical-align: middle;
+    height: auto !important;
+    min-height: 0 !important;
+}
+
+/* Evita que a coluna Gerenciar force a tabela a crescer */
+.pagina-agendamentos-admin .tabela-agendamentos td:last-child {
+    min-width: 0 !important;
+    width: 20%;
+    white-space: normal !important;
+}
+
+/* Controles da coluna Gerenciar */
+.pagina-agendamentos-admin .tabela-agendamentos td:last-child select,
+.pagina-agendamentos-admin .tabela-agendamentos td:last-child input,
+.pagina-agendamentos-admin .tabela-agendamentos td:last-child textarea,
+.pagina-agendamentos-admin .tabela-agendamentos td:last-child button {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    font-size: 11px;
+}
+
+/* Em telas pequenas, permite rolagem para não esmagar o conteúdo */
+@media (max-width: 700px) {
+    .pagina-agendamentos-admin .tabela-responsiva {
+        overflow-x: auto !important;
+    }
+
+    .pagina-agendamentos-admin .tabela-agendamentos {
+        min-width: 1100px !important;
+    }
+}
+.pagina-agendamentos-admin .tabela-agendamentos th:nth-child(4) {
+    font-size: 9px !important;
+}
+
+/* =========================================
+   CORREÇÃO FINAL - CARTÕES DE SERVIÇOS
+========================================= */
+
+.pagina-servicos-admin .grade-servicos {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 20px;
+    width: 100%;
+}
+
+.pagina-servicos-admin .card-servico-admin {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-width: 0;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.pagina-servicos-admin .topo-card-servico {
+    width: 100%;
+    min-width: 0;
+}
+
+.pagina-servicos-admin .descricao-servico {
+    min-height: 42px;
+    overflow-wrap: break-word;
+}
+
+.pagina-servicos-admin .informacoes-servico {
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.pagina-servicos-admin .acoes-servico {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    gap: 10px;
+    margin-top: auto;
+    padding-top: 15px;
+    box-sizing: border-box;
+}
+
+.pagina-servicos-admin .acoes-servico > a,
+.pagina-servicos-admin .acoes-servico > form {
+    flex: 1;
+    min-width: 0;
+    width: 0;
+    margin: 0;
+}
+
+.pagina-servicos-admin .acoes-servico .botao-editar-servico,
+.pagina-servicos-admin .acoes-servico .botao-status-servico {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-width: 0;
+    min-height: 42px;
+    padding: 8px 5px;
+    box-sizing: border-box;
+    font-size: 12px;
+    text-align: center;
+    line-height: 1.3;
+}
+
+.pagina-servicos-admin .form-status-servico {
+    display: flex;
+    min-width: 0;
+    width: 100%;
+}
+
+/* Em telas menores, um cartão por linha */
+@media (max-width: 700px) {
+    .pagina-servicos-admin .grade-servicos {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Ajuste definitivo dos botões dos serviços */
+.pagina-servicos-admin .acoes-servico {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 10px;
+    width: 100%;
+}
+
+.pagina-servicos-admin .acoes-servico > a,
+.pagina-servicos-admin .acoes-servico > form {
+    display: flex;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+}
+
+.pagina-servicos-admin .acoes-servico .botao-editar-servico,
+.pagina-servicos-admin .acoes-servico .botao-status-servico {
+    width: 100%;
+    min-width: 0;
+    min-height: 48px;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    white-space: normal;
+    font-size: 13px;
+    line-height: 1.3;
+    box-sizing: border-box;
+}
+/* Restaurar o fundo roxo claro do botão Editar serviço */
+.pagina-servicos-admin .acoes-servico .botao-editar-servico {
+    background: #f0e8f2;
+    color: #713b82;
+    border: none;
+    border-radius: 8px;
+}
+
+.pagina-servicos-admin .acoes-servico .botao-editar-servico:hover {
+    background: #e5d7e9;
+    color: #572d65;
+}
+
+/* Alinhamento dos campos do cadastro de serviços */
+.pagina-servicos-admin .formulario-servico {
+    align-items: end;
+}
+
+.pagina-servicos-admin .campo-servico {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-width: 0;
+}
+
+.pagina-servicos-admin .campo-servico label {
+    min-height: 20px;
+    margin-bottom: 8px;
+}
+
+.pagina-servicos-admin .campo-servico input,
+.pagina-servicos-admin .campo-servico select {
+    width: 100%;
+    height: 46px;
+    box-sizing: border-box;
+}
+
+.pagina-servicos-admin .campo-servico select {
+    padding: 0 12px;
 }
